@@ -32,6 +32,7 @@ public class MainEngine {
         String fileContent;
         Path path;
         BasicFileAttributes attr;
+        List<FolderItem> subFiles;
         FolderItem currentFolderItem;
         for (final File f : dir.listFiles()) {
             if (!f.getName().endsWith(".magit")) {
@@ -39,7 +40,7 @@ public class MainEngine {
                 attr = Files.readAttributes(path, BasicFileAttributes.class);
 
                 if (f.isDirectory()) {
-                    List<FolderItem> subFiles = new LinkedList<FolderItem>();
+                    subFiles = new LinkedList<FolderItem>();
                     walk(f, foldersMap, subFiles);
                     Collections.sort(subFiles, FolderItem::compareTo);
                     String key = calculateFileSHA1(subFiles);
