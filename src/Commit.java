@@ -57,6 +57,7 @@ public class Commit {
                     temp = DigestUtils.sha1Hex(fileContent) + f.getName() + "name" + attr.lastModifiedTime() + "file";
                     parentFolder.add(temp);
 
+
                 }
 
             }
