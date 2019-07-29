@@ -13,7 +13,7 @@ public class UImain {
 
 
     public void run() throws IOException {
-        initRepository();
+//        initRepository();
         engine.commit();
     }
 
