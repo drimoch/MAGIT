@@ -118,7 +118,15 @@ public class MainEngine {
     }
 
     public void commit() throws IOException {
-        Map<String, List<FolderItem>> mapOfWC = scanWorkingCopy(m_currentRepository);
+        Map<String, List<FolderItem>> mapOfWC;
+        String latestCommitSha = EngineUtils.getLastCommitSha(m_currentRepository);
+        if (latestCommitSha.equals("") || latestCommitSha == null){//first commit
+
+        }
+        else {//not first commit
+
+        }
+            mapOfWC = scanWorkingCopy(m_currentRepository);
     }
 
     public void initRepository(String rootDirPath, String repoName) throws IOException {
