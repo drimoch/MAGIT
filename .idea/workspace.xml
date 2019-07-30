@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ConsoleUI/src/UImain.java" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleUI/src/UImain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/src/EngineUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/EngineUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/src/FolderItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/FolderItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/src/MainEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/MainEngine.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -33,39 +32,57 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ConsoleUI/src/UImain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="17" column="78" selection-start-line="17" selection-start-column="78" selection-end-line="17" selection-end-column="78" />
+            <state relative-caret-position="267">
+              <caret line="18" column="72" selection-start-line="18" selection-start-column="72" selection-end-line="18" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="121" selection-start-line="121" selection-end-line="121" />
-              <folding>
-                <element signature="e#837#863#0" expanded="true" />
-                <element signature="method#createCommit#0;class#MainEngine#0" />
-                <element signature="method#initRepo#0;class#MainEngine#0" />
-                <element signature="method#initRepository#0;class#MainEngine#0" />
-                <element signature="e#4792#4818#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="352">
+              <caret line="115" column="18" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
+              <folding>
+                <element signature="method#scanWorkingCopy#0;class#MainEngine#0" />
+                <element signature="e#390#423#0" />
+                <element signature="method#walk#0;class#MainEngine#0" />
+                <element signature="e#1140#2128#1" />
+                <element signature="e#1191#2118#1" />
+                <element signature="e#1356#1796#1" />
+                <element signature="e#1830#2103#1" />
+                <element signature="method#calculateFileSHA1#0;class#MainEngine#0" />
+                <element signature="e#2469#2524#1" />
+                <element signature="method#createCommit#0;class#MainEngine#0" />
+                <element signature="method#initRepo#0;class#MainEngine#0" />
+                <element signature="e#2898#3986#1" />
+                <element signature="e#3061#3893#1" />
+                <element signature="e#3899#3976#1" />
+                <element signature="e#4610#4611#0" expanded="true" />
+                <element signature="method#commit#0;class#MainEngine#0" />
+                <element signature="method#initRepository#0;class#MainEngine#0" />
+                <element signature="method#createLatestCommitMap#0;class#MainEngine#0" />
+                <element signature="method#createCommitMapRec#0;class#MainEngine#0" />
+                <element signature="e#5140#5227#1" />
+                <element signature="e#5185#5219#1" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Engine/src/EngineUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="7" column="63" lean-forward="true" selection-start-line="7" selection-start-column="63" selection-end-line="7" selection-end-column="63" />
+            <state relative-caret-position="128">
+              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#517#536#0" expanded="true" />
+                <element signature="method#parseToFolderList#0;class#EngineUtils#0" />
+                <element signature="e#672#874#1" />
+                <element signature="method#getZippedFileLines#0;class#EngineUtils#0" />
+                <element signature="e#1342#1376#1" />
               </folding>
             </state>
           </provider>
@@ -97,11 +114,11 @@
     <findStrings>
       <find>sha</find>
       <find>sort</find>
-      <find>read</find>
       <find>folderIt</find>
       <find>arra</find>
       <find>stream</find>
       <find>spli</find>
+      <find>read</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -117,10 +134,10 @@
         <option value="$PROJECT_DIR$/src/Repo.java" />
         <option value="$PROJECT_DIR$/src/Commit.java" />
         <option value="$PROJECT_DIR$/src/MainEngine.java" />
-        <option value="$PROJECT_DIR$/Engine/src/EngineUtils.java" />
         <option value="$PROJECT_DIR$/Engine/src/FolderItem.java" />
-        <option value="$PROJECT_DIR$/ConsoleUI/src/UImain.java" />
         <option value="$PROJECT_DIR$/Engine/src/MainEngine.java" />
+        <option value="$PROJECT_DIR$/ConsoleUI/src/UImain.java" />
+        <option value="$PROJECT_DIR$/Engine/src/EngineUtils.java" />
       </list>
     </option>
   </component>
@@ -186,7 +203,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.idesettings.debugger.capture" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.folding" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -224,7 +241,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1564393835624</updated>
-      <workItem from="1564393841188" duration="31899000" />
+      <workItem from="1564393841188" duration="35779000" />
     </task>
     <task id="LOCAL-00001" summary="nothing">
       <created>1564404136766</created>
@@ -289,14 +306,22 @@
       <option name="project" value="LOCAL" />
       <updated>1564489751360</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="finished MainEngine.createLatestCommitMap">
+      <created>1564492361512</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1564492361512</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31899000" />
+    <option name="totallyTimeSpent" value="35779000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" />
       <window_info id="Image Layers" />
@@ -315,7 +340,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.329429" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49932885" visible="true" weight="0.33235726" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49932885" visible="true" weight="0.284041" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -373,7 +398,8 @@
     <MESSAGE value="created FolderItem,changed scanWorkingCopy &amp; walk" />
     <MESSAGE value="fixed FolderItem ctor" />
     <MESSAGE value="new class, working on creating map from objects" />
-    <option name="LAST_COMMIT_MESSAGE" value="new class, working on creating map from objects" />
+    <MESSAGE value="finished MainEngine.createLatestCommitMap" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished MainEngine.createLatestCommitMap" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -383,12 +409,6 @@
           <line>387</line>
           <properties />
           <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Engine/src/MainEngine.java</url>
-          <line>121</line>
-          <properties />
-          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -470,13 +490,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ConsoleUI/src/Program.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Downloads/zip4j-1.2.7.jar!/net/lingala/zip4j/core/ZipFile.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -512,27 +525,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Engine/src/EngineUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="7" column="63" lean-forward="true" selection-start-line="7" selection-start-column="63" selection-end-line="7" selection-end-column="63" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#517#536#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ConsoleUI/src/UImain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="17" column="78" selection-start-line="17" selection-start-column="78" selection-end-line="17" selection-end-column="78" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/FolderItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
@@ -546,14 +538,60 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="121" selection-start-line="121" selection-end-line="121" />
+        <state relative-caret-position="352">
+          <caret line="115" column="18" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
           <folding>
-            <element signature="e#837#863#0" expanded="true" />
+            <element signature="method#scanWorkingCopy#0;class#MainEngine#0" />
+            <element signature="e#390#423#0" />
+            <element signature="method#walk#0;class#MainEngine#0" />
+            <element signature="e#1140#2128#1" />
+            <element signature="e#1191#2118#1" />
+            <element signature="e#1356#1796#1" />
+            <element signature="e#1830#2103#1" />
+            <element signature="method#calculateFileSHA1#0;class#MainEngine#0" />
+            <element signature="e#2469#2524#1" />
             <element signature="method#createCommit#0;class#MainEngine#0" />
             <element signature="method#initRepo#0;class#MainEngine#0" />
+            <element signature="e#2898#3986#1" />
+            <element signature="e#3061#3893#1" />
+            <element signature="e#3899#3976#1" />
+            <element signature="e#4610#4611#0" expanded="true" />
+            <element signature="method#commit#0;class#MainEngine#0" />
             <element signature="method#initRepository#0;class#MainEngine#0" />
-            <element signature="e#4792#4818#0" expanded="true" />
+            <element signature="method#createLatestCommitMap#0;class#MainEngine#0" />
+            <element signature="method#createCommitMapRec#0;class#MainEngine#0" />
+            <element signature="e#5140#5227#1" />
+            <element signature="e#5185#5219#1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConsoleUI/src/Program.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConsoleUI/src/UImain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="18" column="72" selection-start-line="18" selection-start-column="72" selection-end-line="18" selection-end-column="72" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Engine/src/EngineUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+          <folding>
+            <element signature="method#parseToFolderList#0;class#EngineUtils#0" />
+            <element signature="e#672#874#1" />
+            <element signature="method#getZippedFileLines#0;class#EngineUtils#0" />
+            <element signature="e#1342#1376#1" />
           </folding>
         </state>
       </provider>

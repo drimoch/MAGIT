@@ -11,8 +11,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 
 public class MainEngine {
-    private final String m_relativePathToObjDir = ".magit\\objects";
-    private String m_currentRepository = "C:\\Users\\David\\Documents\\TestRepo";
+    public static final String m_relativePathToObjDir = ".magit\\objects";
+    private static String m_currentRepository = "C:\\Users\\David\\Documents\\TestRepo";
+
 
     public static Map<String, List<FolderItem>> scanWorkingCopy(String currentRepository1) throws IOException {
 
@@ -79,9 +80,6 @@ public class MainEngine {
         //get master commit fro
     }
 
-
-    //COMMIT RELATED FUNCTIONS
-
     public static void initRepo(String path, String name) throws IOException {
         //take care of  exceptions when using this
         if (path != null && name != null && name != "" && path != "") {
@@ -106,6 +104,17 @@ public class MainEngine {
                 System.out.println(rootDirPath + " exist. ");
             }
         }
+    }
+
+
+    //COMMIT RELATED FUNCTIONS
+
+    public static String getCurrentRepository() {
+        return m_currentRepository;
+    }
+
+    public static void setCurrentRepository(String i_currentRepository) {
+        m_currentRepository = i_currentRepository;
     }
 
     public void commit() throws IOException {
