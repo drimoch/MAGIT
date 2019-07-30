@@ -11,7 +11,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 
 public class MainEngine {
-    private String currentRepository = "C:\\Users\\David\\Documents\\TestRepo";
+    private final String m_relativePathToObjDir = ".magit\\objects";
+    private String m_currentRepository = "C:\\Users\\David\\Documents\\TestRepo";
 
     public static Map<String, List<FolderItem>> scanWorkingCopy(String currentRepository1) throws IOException {
 
@@ -34,27 +35,27 @@ public class MainEngine {
         BasicFileAttributes attr;
         List<FolderItem> subFiles;
         FolderItem currentFolderItem;
-        for (final File f : dir.listFiles()) {
-            if (!f.getName().endsWith(".magit")) {
-                path = Paths.get(f.getPath());
+        for (final File folderItem : dir.listFiles()) {
+            if (!folderItem.getName().endsWith(".magit")) {
+                path = Paths.get(folderItem.getPath());
                 attr = Files.readAttributes(path, BasicFileAttributes.class);
 
-                if (f.isDirectory()) {
+                if (folderItem.isDirectory()) {
                     subFiles = new LinkedList<FolderItem>();
-                    walk(f, foldersMap, subFiles);
+                    walk(folderItem, foldersMap, subFiles);
                     Collections.sort(subFiles, FolderItem::compareTo);
                     String key = calculateFileSHA1(subFiles);
                     foldersMap.put(key, subFiles);
 
-                    currentFolderItem = new FolderItem(key, f.getName(), "user name", attr.lastModifiedTime().toString(), "folder");
+                    currentFolderItem = new FolderItem(key, folderItem.getName(), "user name", attr.lastModifiedTime().toString(), "folder");
                     parentFolder.add(currentFolderItem);
 
 
                 }
 
-                if (f.isFile()) {
-                    fileContent = FileUtils.readFileToString(f, StandardCharsets.UTF_8);
-                    currentFolderItem = new FolderItem(DigestUtils.sha1Hex(fileContent), f.getName(), "user name", attr.lastModifiedTime().toString(),"file");
+                if (folderItem.isFile()) {
+                    fileContent = FileUtils.readFileToString(folderItem, StandardCharsets.UTF_8);
+                    currentFolderItem = new FolderItem(DigestUtils.sha1Hex(fileContent), folderItem.getName(), "user name", attr.lastModifiedTime().toString(), "file");
                     parentFolder.add(currentFolderItem);
 
 
@@ -108,15 +109,21 @@ public class MainEngine {
     }
 
     public void commit() throws IOException {
-        Map<String, List<FolderItem>> mapOfWC = scanWorkingCopy(currentRepository);
+        Map<String, List<FolderItem>> mapOfWC = scanWorkingCopy(m_currentRepository);
     }
 
     public void initRepository(String rootDirPath, String repoName) throws IOException {
         initRepo(rootDirPath, repoName);
     }
 
-//    public Map<String, List<String>> createLatestCommitMap(String rootDirSha) {
-//        List
-//    }
+    public Map<String, List<FolderItem>> createLatestCommitMap(String i_rootDirSha) {
+        try {
+            List<FolderItem> rootDir = EngineUtils.parseToFolderList(m_currentRepository + "\\" + m_relativePathToObjDir + "\\" + i_rootDirSha);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
 }
