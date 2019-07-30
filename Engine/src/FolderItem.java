@@ -17,6 +17,14 @@ public class FolderItem implements Comparable {
         m_type = i_typr;
     }
 
+    public FolderItem(String[] i_itemDetails) {
+        m_sha1 = i_itemDetails[0];
+        m_itemName = i_itemDetails[1];
+        m_userName = i_itemDetails[2];
+        m_lastModified = i_itemDetails[3];
+        m_type = i_itemDetails[4];
+    }
+
     public String getItemName() {
         return m_itemName;
     }
@@ -27,6 +35,7 @@ public class FolderItem implements Comparable {
     public String getType(){
         return m_type;
     }
+
 
     @Override
     public int compareTo(Object i_FolderItemToCompare) {
