@@ -1,3 +1,5 @@
+import com.sun.org.apache.xpath.internal.operations.Equals;
+
 import java.nio.file.attribute.FileTime;
 
 public class FolderItem implements Comparable {
@@ -8,7 +10,7 @@ public class FolderItem implements Comparable {
     private String m_type;
 
     public FolderItem(String i_sha1, String i_itemName, String i_userName, String i_lastModified, String i_typr) {
-         m_sha1 = i_sha1;
+        m_sha1 = i_sha1;
         m_itemName = i_itemName;
         m_userName = i_userName;
         m_lastModified = i_lastModified;
@@ -22,6 +24,9 @@ public class FolderItem implements Comparable {
     public String getSha1() {
         return m_sha1;
     }
+    public String getType(){
+        return m_type;
+    }
 
     @Override
     public int compareTo(Object i_FolderItemToCompare) {
@@ -29,5 +34,6 @@ public class FolderItem implements Comparable {
 
         return m_itemName.compareTo(folderItemToCompare.getItemName());
     }
+
 
 }

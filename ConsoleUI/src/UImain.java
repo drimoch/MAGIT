@@ -14,7 +14,7 @@ public class UImain {
 
     public void run() throws IOException {
 //        initRepository();
-        engine.commit();
+        engine.testerFunction("C:\\TestRepoWC","C:\\TestRepoCommit");
     }
 
     public void initRepository() {

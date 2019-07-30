@@ -8,7 +8,7 @@ public class Program {
             consoleUI.run();
         } catch (IOException e) {
             e.printStackTrace();
-            
+
         }
     }
 }
