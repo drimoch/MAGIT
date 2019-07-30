@@ -116,14 +116,20 @@ public class MainEngine {
         initRepo(rootDirPath, repoName);
     }
 
-    public Map<String, List<FolderItem>> createLatestCommitMap(String i_rootDirSha) {
-        try {
-            List<FolderItem> rootDir = EngineUtils.parseToFolderList(m_currentRepository + "\\" + m_relativePathToObjDir + "\\" + i_rootDirSha);
+    public Map<String, List<FolderItem>> createLatestCommitMap(String i_rootDirSha) throws IOException {
+        Map<String, List<FolderItem>> result = new HashMap<String, List<FolderItem>>();
+        createCommitMapRec(i_rootDirSha, result);
+        return result;
+    }
 
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+    private void createCommitMapRec(String i_rootDirSha, Map<String, List<FolderItem>> i_commitMap) throws IOException {
+        List<FolderItem> rootDir = EngineUtils.parseToFolderList(m_currentRepository + "\\" + m_relativePathToObjDir + "\\" + i_rootDirSha + ".zip");
+        i_commitMap.put(i_rootDirSha, rootDir);
+        for (FolderItem item : rootDir) {
+            if (item.getType().equals("folder")) {
+                createCommitMapRec(item.getSha1(), i_commitMap);
+            }
         }
-        return null;
     }
 
 }

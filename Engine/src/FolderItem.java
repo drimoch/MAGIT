@@ -31,6 +31,10 @@ public class FolderItem implements Comparable {
         return m_sha1;
     }
 
+    public String getType() {
+        return m_type;
+    }
+
     @Override
     public int compareTo(Object i_FolderItemToCompare) {
         FolderItem folderItemToCompare = (FolderItem) i_FolderItemToCompare;

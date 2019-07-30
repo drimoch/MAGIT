@@ -1,34 +1,20 @@
-import org.apache.commons.io.FileUtils;
-
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
-
-
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class EngineUtils {
+
     public static List<FolderItem> parseToFolderList(String i_filePath) throws IOException {
 
-
-//        String destination = "some/destination/folder";
-//
-//            ZipFile zipFile = new ZipFile(i_filePath);
-//            zipFile.extractAll(destination);
         List<FolderItem> result = new ArrayList<FolderItem>();
         String[] itemDetails;
-        List<String> folderitems = getZippedFileLines(i_filePath);
-        for (String line : folderitems) {
+        List<String> folderItems = getZippedFileLines(i_filePath);
+        for (String line : folderItems) {
             itemDetails = line.split(",");
-
             result.add(new FolderItem(itemDetails));
-
         }
-        File rootDir = FileUtils.getFile(i_filePath);
-        String rootDirContent;
-        rootDirContent = FileUtils.readFileToString(rootDir, StandardCharsets.UTF_8);
-        return null;
+        return result;
     }
 
     public static List<String> getZippedFileLines(String i_filePath) throws IOException {
