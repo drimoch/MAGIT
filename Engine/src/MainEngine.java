@@ -183,13 +183,13 @@ public class MainEngine {
             if(!LastCommitMap.isEmpty()) {
                 List<FolderItem> deleted = (List<FolderItem>) CollectionUtils.removeAll(currentCommitFolder, currentWCFolder, itemsEquator);
                 deleted.stream().
-                        forEach(o -> mapLeavesofPathTree(LastCommitMap, o, path, deletedList));
+                        forEach(o -> mapLeavesOfPathTree(LastCommitMap, o, path, deletedList));
             }
             //added files = wcmap-commitmap
             if(!WCmap.isEmpty()) {
                 List<FolderItem> added = (List<FolderItem>) CollectionUtils.removeAll(WCmap.get(currentWCKey), LastCommitMap.get(currentCommitKey), itemsEquator);
                 added.stream().
-                        forEach(o -> mapLeavesofPathTree(WCmap, o, path, addedList));
+                        forEach(o -> mapLeavesOfPathTree(WCmap, o, path, addedList));
             }
             //we remain with the common files. go through them
             if(!LastCommitMap.isEmpty()) {
@@ -237,7 +237,7 @@ public class MainEngine {
 
     }
 
-    }
+    
 
     public void initRepository(String rootDirPath, String repoName) throws IOException {
         initRepo(rootDirPath, repoName);
