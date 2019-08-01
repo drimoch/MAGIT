@@ -1,4 +1,4 @@
-import java.nio.file.attribute.FileTime;
+
 
 public class FolderItem implements Comparable {
     private String m_sha1;
@@ -30,10 +30,10 @@ public class FolderItem implements Comparable {
     public String getSha1() {
         return m_sha1;
     }
-
-    public String getType() {
+    public String getType(){
         return m_type;
     }
+
 
     @Override
     public int compareTo(Object i_FolderItemToCompare) {
@@ -41,5 +41,6 @@ public class FolderItem implements Comparable {
 
         return m_itemName.compareTo(folderItemToCompare.getItemName());
     }
+
 
 }
