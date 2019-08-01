@@ -1,10 +1,15 @@
+import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 public class EngineUtils {
     private static String m_relativeBranchPath = "\\.magit\\branches";
@@ -39,11 +44,56 @@ public class EngineUtils {
 
     public static String getLastCommitSha(String i_currentRepository) throws IOException {
         String branchName, rootDirSha;
-        String[] branchFilelines;
         File headFile = FileUtils.getFile(i_currentRepository + m_relativeBranchPath + "\\HEAD");
         branchName = FileUtils.readFileToString(headFile, StandardCharsets.UTF_8);
-        File branchFile = FileUtils.getFile(i_currentRepository + m_relativeBranchPath + branchName);
-        rootDirSha = FileUtils.readFileToString(headFile, StandardCharsets.UTF_8);
+        File branchFile = FileUtils.getFile(i_currentRepository + m_relativeBranchPath + "\\"+ branchName);
+        rootDirSha = FileUtils.readFileToString(branchFile, StandardCharsets.UTF_8);
         return rootDirSha;
     }
-}
+
+    public static void overWriteFileContent(String path, String CommitSHA1){
+        try {
+            FileWriter fw =new FileWriter(path, false);
+            fw.write(CommitSHA1);
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void ZipFile(String zipFileName, String sourceFile, String zipTarget) {
+
+        try {
+            FileOutputStream fos = new FileOutputStream(zipTarget + zipFileName + ".zip");
+            ZipOutputStream zipOut = new ZipOutputStream(fos);
+            File fileToZip = new File(sourceFile);
+            FileInputStream fis = new FileInputStream(fileToZip);
+            ZipEntry zipEntry = new ZipEntry(fileToZip.getName());
+            zipOut.putNextEntry(zipEntry);
+            byte[] bytes = new byte[1024];
+            int length;
+            while ((length = fis.read(bytes)) >= 0) {
+                zipOut.write(bytes, 0, length);
+            }
+            zipOut.close();
+            fis.close();
+            fos.close();
+
+        } catch (FileNotFoundException ex) {
+            System.err.format("The file %s does not exist", sourceFile);
+        } catch (IOException ex) {
+            System.err.println("I/O error: " + ex);
+        }
+
+    }
+    public static String listToString(List <?> list, String delimiter){
+        List<String> res=new LinkedList<>();
+        list.forEach(i->res.add(i.toString()));
+        String temp= String.join(delimiter,res);
+        return temp;
+    }
+
+    }
+
+

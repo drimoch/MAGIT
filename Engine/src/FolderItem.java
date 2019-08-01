@@ -43,6 +43,13 @@ public class FolderItem implements Comparable {
 
         return m_itemName.compareTo(folderItemToCompare.getItemName());
     }
+    @Override
+    public String toString() {
+        return m_sha1+","+
+         m_itemName+","+
+         m_userName+","+ m_lastModified+","+m_type;
+
+    }
 
 
 }
