@@ -16,7 +16,7 @@ import java.util.*;
 public class MainEngine {
     public static final String m_relativePathToObjDir = ".magit\\objects";
     private static String m_currentRepository = "C:\\Users\\David\\Documents\\TestRepo";
-
+    private static String m_currentUserName = "Administrator";
 
     public static void testerFunction(String WCpath, String CommitPath) {
         try {
@@ -142,6 +142,14 @@ public class MainEngine {
 
     //COMMIT RELATED FUNCTIONS
 
+    public static String getUserName() {
+        return m_currentUserName;
+    }
+
+    public static void setUserName(String i_userName) {
+        m_currentUserName = i_userName;
+    }
+
     public static String getCurrentRepository() {
         return m_currentRepository;
     }
@@ -167,12 +175,12 @@ public class MainEngine {
             //deleted files= commitmap-wcmap
             List<FolderItem> deleted = (List<FolderItem>) CollectionUtils.removeAll(currentCommitFolder, currentWCFolder, itemsEquator);
             deleted.stream().
-                    forEach(o -> mapLeavesofPathTree(LastCommitMap, o, path, deletedList));
+                    forEach(o -> mapLeavesOfPathTree(LastCommitMap, o, path, deletedList));
 
             //added files = wcmap-commitmap
             List<FolderItem> added = (List<FolderItem>) CollectionUtils.removeAll(WCmap.get(currentWCKey), LastCommitMap.get(currentCommitKey), itemsEquator);
             added.stream().
-                    forEach(o -> mapLeavesofPathTree(WCmap, o, path, addedList));
+                    forEach(o -> mapLeavesOfPathTree(WCmap, o, path, addedList));
             //we remain with the common files. go through them
             List<FolderItem> changed = (List<FolderItem>) CollectionUtils.retainAll(LastCommitMap.get(currentCommitKey), WCmap.get(currentWCKey), itemsEquator);
             for (FolderItem item : changed) {
@@ -191,15 +199,16 @@ public class MainEngine {
 
     }
 
-    public static void mapLeavesofPathTree(Map<String, List<FolderItem>> mapOfPath, FolderItem item, String path, List<String> leaves) {
+    public static void mapLeavesOfPathTree(Map<String, List<FolderItem>> mapOfPath, FolderItem item, String path, List<String> leaves) {
         if (item.getType().equals("file"))
             leaves.add(path + "\\" + item.getItemName());
 
         else {
-            mapOfPath.get(item.getSha1()).stream().forEach(i -> mapLeavesofPathTree(mapOfPath, i, path + "\\" + item.getItemName(), leaves));
+            mapOfPath.get(item.getSha1()).stream().forEach(i -> mapLeavesOfPathTree(mapOfPath, i, path + "\\" + item.getItemName(), leaves));
         }
 
     }
+
 
     public void commit() throws IOException {
         Map<String, List<FolderItem>> mapOfWC;
