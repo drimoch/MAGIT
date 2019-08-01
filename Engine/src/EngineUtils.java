@@ -1,6 +1,5 @@
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.io.FileUtils;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -29,11 +28,13 @@ public class EngineUtils {
     public static List<String> getZippedFileLines(String i_filePath) throws IOException {
         BufferedReader reader;
         String currentLine;
+        InputStream stream;
         List<String> fileLines = new ArrayList<>();
+
         ZipFile zipFile = new ZipFile(i_filePath);
         Enumeration<? extends ZipEntry> entries = zipFile.entries();
         ZipEntry entry = entries.nextElement();
-        InputStream stream = zipFile.getInputStream(entry);
+        stream = zipFile.getInputStream(entry);
         reader = new BufferedReader(new InputStreamReader(stream));
 
         while ((currentLine = reader.readLine()) != null) {

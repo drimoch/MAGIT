@@ -1,6 +1,4 @@
-import com.sun.org.apache.xpath.internal.operations.Equals;
 
-import java.nio.file.attribute.FileTime;
 
 public class FolderItem implements Comparable {
     private String m_sha1;
