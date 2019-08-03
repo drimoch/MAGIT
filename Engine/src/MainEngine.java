@@ -1,9 +1,11 @@
+import com.sun.deploy.util.StringUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections4.Equator;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -11,50 +13,30 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
-
+import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class MainEngine {
     public static final String m_relativePathToObjDir = ".magit\\objects";
-    private static String m_currentRepository = "C:\\Users\\David\\Documents\\TestRepo";
+    private static String m_currentRepository = "C:\\tester";
     private static String m_currentUserName = "Administrator";
-
-    public static void testerFunction(String WCpath, String CommitPath) {
-        try {
-            String WCsha1 = null, commitsha1 = null;
-            // Map<String, List<FolderItem>> foldersMap = new HashMap<String, List<FolderItem>>();
-
-            Map<String, List<FolderItem>> WCmap = new HashMap<>();
-            WCsha1 = scanWorkingCopy(WCpath, WCmap);
-            Map<String, List<FolderItem>> commitmap = new HashMap<>();
-            commitsha1 = scanWorkingCopy(CommitPath, commitmap);
-            List<String> deletedList = new LinkedList<>();
-            List<String> addedList = new LinkedList<>();
-            List<String> changedList = new LinkedList<>();
-            compareWCtoCommit(WCmap,
-                    commitmap,
-                    WCsha1,
-                    commitsha1,
-                    WCpath,
-                    deletedList, addedList, changedList);
-            Scanner scanner = new Scanner(System.in);
-            scanner.nextLine();
+    public String userName;
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-
-    }
-
-    public static String scanWorkingCopy(String currentRepository1, Map<String, List<FolderItem>> foldersMap) throws IOException {
+    public static String scanWorkingCopy(String currentRepository1,  Map<String, List<FolderItem>> foldersMap) throws IOException {
 
         //compare WC to the master commit
         //create a temp file
         Path dirPath = Paths.get(currentRepository1);
         File dir = dirPath.toFile();
         List<FolderItem> filesList = new LinkedList<>();
-        foldersMap = new HashMap<String, List<FolderItem>>();
+        //foldersMap = new HashMap<String, List<FolderItem>>();
         walk(dir, foldersMap, filesList);
         String rootSha1 = calculateFileSHA1(filesList);
         foldersMap.put(rootSha1, filesList);
@@ -109,9 +91,7 @@ public class MainEngine {
         return DigestUtils.sha1Hex(res);
     }
 
-    public static void createCommit(Map<String, List<String>> sha1Map, String path) {
-        //get master commit fro
-    }
+
 
     public static void initRepo(String path, String name) throws IOException {
         //take care of  exceptions when using this
@@ -158,13 +138,38 @@ public class MainEngine {
         m_currentRepository = i_currentRepository;
     }
 
+    public CommitObj commit(Map<String, List<FolderItem>> mapOfdif) throws IOException {
+        CommitObj commit=null;
+        Map<String, List<FolderItem>> mapOfLatestCommit= new HashMap<>();
+        Map<String, List<FolderItem>> mapOfWC=new HashMap<>();
+        String latestCommitSha1;
+
+        latestCommitSha1= EngineUtils.getLastCommitSha(m_currentRepository);
+        String WCSha1= scanWorkingCopy(m_currentRepository, mapOfWC);
+        if(!WCSha1.equals(latestCommitSha1)){
+                commit= new CommitObj(latestCommitSha1, WCSha1);
+                if(!latestCommitSha1.equals(""))
+                mapOfLatestCommit= createLatestCommitMap(latestCommitSha1);
+                compareWCtoCommit(mapOfWC, mapOfLatestCommit,WCSha1,latestCommitSha1,m_currentRepository,commit.deleted,commit.added,commit.changed);
+
+        }
+        for (String key : mapOfWC.keySet()) {
+            if (!mapOfLatestCommit.containsKey(key)) {
+                mapOfdif.put(key, mapOfWC.get(key));
+            }
+        }
+        return commit;
+
+
+    }
+
     //
     public static void compareWCtoCommit(Map<String, List<FolderItem>> WCmap,
                                          Map<String, List<FolderItem>> LastCommitMap,
                                          String currentWCKey,
                                          String currentCommitKey,
                                          String path,
-                                         List<String> deletedList, List<String> addedList, List<String> changedList) {
+                                         Map<String,String> deletedList, Map<String,String> addedList, Map<String,String> changedList) {
         FolderItemEquator itemsEquator = new FolderItemEquator();
         if (currentCommitKey.equals(currentWCKey))
             return;
@@ -173,35 +178,56 @@ public class MainEngine {
             List<FolderItem> currentWCFolder = WCmap.get(currentWCKey);
 
             //deleted files= commitmap-wcmap
-            List<FolderItem> deleted = (List<FolderItem>) CollectionUtils.removeAll(currentCommitFolder, currentWCFolder, itemsEquator);
-            deleted.stream().
-                    forEach(o -> mapLeavesOfPathTree(LastCommitMap, o, path, deletedList));
-
+            if(!LastCommitMap.isEmpty()) {
+                List<FolderItem> deleted = (List<FolderItem>) CollectionUtils.removeAll(currentCommitFolder, currentWCFolder, itemsEquator);
+                deleted.stream().
+                        forEach(o -> mapLeavesOfPathTree(LastCommitMap, o, path, deletedList));
+            }
             //added files = wcmap-commitmap
-            List<FolderItem> added = (List<FolderItem>) CollectionUtils.removeAll(WCmap.get(currentWCKey), LastCommitMap.get(currentCommitKey), itemsEquator);
-            added.stream().
-                    forEach(o -> mapLeavesOfPathTree(WCmap, o, path, addedList));
+            if(!WCmap.isEmpty()) {
+                List<FolderItem> added = (List<FolderItem>) CollectionUtils.removeAll(WCmap.get(currentWCKey), LastCommitMap.get(currentCommitKey), itemsEquator);
+                added.stream().
+                        forEach(o -> mapLeavesOfPathTree(WCmap, o, path, addedList));
+            }
             //we remain with the common files. go through them
-            List<FolderItem> changed = (List<FolderItem>) CollectionUtils.retainAll(LastCommitMap.get(currentCommitKey), WCmap.get(currentWCKey), itemsEquator);
-            for (FolderItem item : changed) {
-                if (item.getType().equals("folder")) {
-                    Optional<FolderItem> alteredCopy = WCmap.get(currentWCKey).stream().filter(i -> i.getItemName().equals(item.getItemName()) && i.getType().equals("folder")).findFirst();
-                    compareWCtoCommit(WCmap,
-                            LastCommitMap,
-                            alteredCopy.get().getSha1(),
-                            item.getSha1(),
-                            path + "\\" + item.getItemName(),
-                            deletedList, addedList, changedList);
+            if(!LastCommitMap.isEmpty()) {
+                List<FolderItem> changed = (List<FolderItem>) CollectionUtils.retainAll(WCmap.get(currentWCKey), LastCommitMap.get(currentCommitKey), itemsEquator);
+                for (FolderItem item : changed) {
+                    if (item.getType().equals("folder")) {
+                        Optional<FolderItem> alteredCopy = WCmap.get(currentWCKey).stream().filter(i -> i.getItemName().equals(item.getItemName()) && i.getType().equals("folder")).findFirst();
+                        compareWCtoCommit(WCmap,
+                                LastCommitMap,
+                                alteredCopy.get().getSha1(),
+                                item.getSha1(),
+                                path + "\\" + item.getItemName(),
+                                deletedList, addedList, changedList);
 
-                } else changedList.add(path + "\\" + item.getItemName());
+                    } else changedList.put(item.getSha1(), path + "\\" + item.getItemName());
+                }
             }
         }
 
     }
 
-    public static void mapLeavesOfPathTree(Map<String, List<FolderItem>> mapOfPath, FolderItem item, String path, List<String> leaves) {
-        if (item.getType().equals("file"))
-            leaves.add(path + "\\" + item.getItemName());
+
+
+    public static class FolderItemEquator implements Equator<FolderItem> {
+        @Override
+        public boolean equate(FolderItem t1, FolderItem t2) {
+            return (t1.getItemName().equals(t2.getItemName()) && t1.getType().equals( t2.getType()));
+        }
+
+        @Override
+        public int hash(FolderItem folderItem) {
+            return (folderItem.getItemName()+ folderItem.getType()).hashCode();
+        }
+
+    }
+
+
+    public static void mapLeavesOfPathTree(Map<String, List<FolderItem>> mapOfPath, FolderItem item, String path, Map <String,String> leaves) {
+        if(item.getType().equals("file"))
+            leaves.put(item.getSha1(), path+"\\"+item.getItemName());
 
         else {
             mapOfPath.get(item.getSha1()).stream().forEach(i -> mapLeavesOfPathTree(mapOfPath, i, path + "\\" + item.getItemName(), leaves));
@@ -210,16 +236,6 @@ public class MainEngine {
     }
 
 
-    public void commit() throws IOException {
-        Map<String, List<FolderItem>> mapOfWC;
-        String latestCommitSha = EngineUtils.getLastCommitSha(m_currentRepository);
-        if (latestCommitSha.isEmpty() || latestCommitSha == null) {//first commit
-
-        } else {//not first commit
-
-        }
-        //    mapOfWC = scanWorkingCopy(m_currentRepository);
-    }
 
     public void initRepository(String rootDirPath, String repoName) throws IOException {
         initRepo(rootDirPath, repoName);
@@ -241,17 +257,35 @@ public class MainEngine {
         }
     }
 
-    public static class FolderItemEquator implements Equator<FolderItem> {
-        @Override
-        public boolean equate(FolderItem t1, FolderItem t2) {
-            return (t1.getItemName().equals(t2.getItemName()) && t1.getType().equals(t2.getType()));
-        }
+    public void finalizeCommit(CommitObj obj, Map<String, List<FolderItem>> mapOfdif) throws IOException {
+        //zip files and create the commit file. change head branch pointer)
+        String targetPath=m_currentRepository+"\\.magit\\objects\\";
+        obj.changed.forEach((key,string)->EngineUtils.ZipFile(key,string,targetPath));
+        obj.added.forEach((key,string)->EngineUtils.ZipFile(key,string,targetPath));
+        foldersToFile(mapOfdif, targetPath);
 
-        @Override
-        public int hash(FolderItem folderItem) {
-            return (folderItem.getItemName() + folderItem.getType()).hashCode();
-        }
+        String newCommitContent=obj.toString();
+        String newCommitSha1=DigestUtils.sha1Hex(newCommitContent);
+
+        EngineUtils.StringToZipFile(newCommitContent, targetPath, newCommitSha1 );
+        EngineUtils.overWriteFileContent(m_currentRepository+"\\.magit\\branches\\master", newCommitSha1);
+    }
+    public void foldersToFile(Map<String, List<FolderItem>> mapOfdif ,String targetPath){
+
+       mapOfdif.forEach((key, item)-> {
+           try {
+
+               EngineUtils.StringToZipFile( EngineUtils.listToString(item,"\n"), targetPath, key);
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+       });
 
     }
+    //checkout related functions:
+    // map the commit and parse it into WC
+    
+
+
 
 }

@@ -1,5 +1,6 @@
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class UImain {
 
@@ -29,42 +30,102 @@ public class UImain {
     }
 
 
-    public void run() {
-        String userName;
-        System.out.println(String.format("Hello %s", engine.getUserName()));
-        Scanner scanner = new Scanner(System.in);
-        int userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
-        while (userChoice != m_numOfChoicesStartMenu) {
-            switch (userChoice) {
-                case 1:
-                    System.out.println("Enter new user name: ");
-                    userName = scanner.nextLine();
-                    engine.setUserName(userName);
-                    userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
-                    break;
-                case 2:
-                    //here we will write code that loads a repo
-                    //and at the end of it, the main menu will be displayed
-                    int mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
-                    while (mainMenuChoice >= 1 && mainMenuChoice <= m_numOfChoicesMainMenu) {
-                        switch (mainMenuChoice) {
-                            case 1:
-                                break;
-                            case 9:
-                                System.exit(0);
-                                break;
-                            default:
-                                if (mainMenuChoice != m_numOfChoicesMainMenu) {
-                                    mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
-                                }
-                        }
-                    }
+    public void run() throws IOException {
+//        String userName;
+//        System.out.println(String.format("Hello %s", engine.getUserName()));
+//        Scanner scanner = new Scanner(System.in);
+//        int userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
+//        while (userChoice != m_numOfChoicesStartMenu) {
+//            switch (userChoice) {
+//                case 1:
+//                    System.out.println("Enter new user name: ");
+//                    userName = scanner.nextLine();
+//                    engine.setUserName(userName);
+//                    userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
+//                    break;
+//                case 2:
+//                    //here we will write code that loads a repo
+//                    //and at the end of it, the main menu will be displayed
+//                    int mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
+//                    while (mainMenuChoice >= 1 && mainMenuChoice <= m_numOfChoicesMainMenu) {
+//                        switch (mainMenuChoice) {
+//                            case 1:
+//                                break;
+//                            case 9:
+//                                System.exit(0);
+//                                break;
+//                            default:
+//                                if (mainMenuChoice != m_numOfChoicesMainMenu) {
+//                                    mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
+//                                }
+//                        }
+//                    }
+//
+//                case 3:
+//                    System.exit(0);
+//                    break;
+//            }
+//        }
 
-                case 3:
-                    System.exit(0);
-                    break;
+
+       // initRepository();
+        commit();
+    }
+
+    public void commit() {
+
+
+        Map<String, List<FolderItem>> mapOfdif = new HashMap<>();
+        CommitObj commitObject;
+        String doNext, WCsha1;
+        Scanner scanner = new Scanner(System.in);
+        try {
+
+            commitObject = engine.commit(mapOfdif);
+            if (commitObject==null) {
+                System.out.println("No changes detected, nothing to commit");
+                return;
+            } else {
+                displayChanges(commitObject.deleted, commitObject.added, commitObject.changed);
+                System.out.println("Commit changes? press (y)es to commit (n)o to cancel operation ");
+                doNext = scanner.nextLine();
+                while (!doNext.equalsIgnoreCase("y") && !doNext.equalsIgnoreCase("n")) {
+                    System.out.println("No such command, please enter y or n");
+                    doNext = scanner.nextLine();
+                }
+                if (doNext.equalsIgnoreCase("y")) {
+                    System.out.println("Give a short description of the current commit");
+                    commitObject.setCommitMessage(scanner.nextLine());
+                    commitObject.setUserName(engine.userName);
+                    engine.finalizeCommit(commitObject,mapOfdif);
+
+
+                } else System.out.println("Commit canceled");
+                return;
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        System.out.println();
+
+
+    }
+
+
+    public void displayChanges(Map<String, String> deleted, Map<String, String> added, Map<String, String> changed) {
+        //TODO move logic to engine, send back just the message!
+        String deletedMessage, addedMessage, changedMessage;
+        deletedMessage = (deleted.isEmpty() ? "No files were deleted\n" : "Files deleted from directory:\n");
+        changedMessage = (changed.isEmpty() ? "No files were changed\n" : "Files changed in directory:\n");
+        addedMessage = (added.isEmpty() ? "No files were added\n" : "Files added to directory:\n");
+        List <String>d= deleted.values().stream().collect(Collectors.toList());
+        List <String>a= added.values().stream().collect(Collectors.toList());
+        List <String>c= changed.values().stream().collect(Collectors.toList());
+
+
+        System.out.println(deletedMessage + String.join("\n",d));
+        System.out.println(changedMessage + String.join("\n", c));
+        System.out.println(addedMessage + String.join("\n", a));
 
     }
 
