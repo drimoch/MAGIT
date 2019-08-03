@@ -29,7 +29,7 @@ public class UImain {
     }
 
 
-    public void run() throws IOException {
+    public void run() {
         String userName;
         System.out.println(String.format("Hello %s", engine.getUserName()));
         Scanner scanner = new Scanner(System.in);
