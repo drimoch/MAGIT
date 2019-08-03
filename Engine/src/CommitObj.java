@@ -4,11 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class CommitObj {
+    String rootDirSha1;
     private String m_submitterName;
     String dateCreated;
     String commitMessage;
     String PreviousCommit;
     String CommitSHA1;
+
     public Map<String, String> added;
     public Map<String, String> changed;
     public Map<String, String> deleted;
@@ -21,12 +23,12 @@ public class CommitObj {
         m_submitterName = i_userNAme;
     }
 
-    CommitObj(String o_PreviousCommit, String o_CommitSHA1) {
+    CommitObj(String o_PreviousCommit, String o_rootSHA1) {
         PreviousCommit = o_PreviousCommit;
-        CommitSHA1 = o_CommitSHA1;
-        deleted = new HashMap<String, String>();
-        changed = new HashMap<String, String>();
-        added = new HashMap<String, String>();
+        rootDirSha1 = o_rootSHA1;
+        deleted = new HashMap<>();
+        changed = new HashMap<>();
+        added = new HashMap<>();
         DateFormat dateFormat = new SimpleDateFormat("dd.mm.yyyy-hh:mm:ss:sss");
         Date date = new Date();
         dateCreated = dateFormat.format(date);
@@ -39,9 +41,7 @@ public class CommitObj {
 
     @Override
     public String toString() {
-        Field[] fields = this.getClass().getDeclaredFields();
-
-        return m_submitterName + "," + dateCreated + "," + commitMessage + "," + PreviousCommit + "," + CommitSHA1;
+        return rootDirSha1+"\n" + m_submitterName + "\n" + dateCreated + "\n" + commitMessage + "\n" + PreviousCommit;
     }
 
 }

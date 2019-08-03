@@ -7,12 +7,12 @@ public class FolderItem implements Comparable {
     private String m_lastModified;
     private String m_type;
 
-    public FolderItem(String i_sha1, String i_itemName, String i_userName, String i_lastModified, String i_typr) {
+    public FolderItem(String i_sha1, String i_itemName, String i_userName, String i_lastModified, String i_type) {
         m_sha1 = i_sha1;
         m_itemName = i_itemName;
         m_userName = i_userName;
         m_lastModified = i_lastModified;
-        m_type = i_typr;
+        m_type = i_type;
     }
 
     public FolderItem(String[] i_itemDetails) {

@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4fe2640f-beef-4929-ba20-03a8c2752714" name="Default Changelist" comment="">
+    <list default="true" id="4fe2640f-beef-4929-ba20-03a8c2752714" name="Default Changelist" comment="Fixed issues with commit.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ConsoleUI/src/UImain.java" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleUI/src/UImain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/src/CommitObj.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/CommitObj.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/src/EngineUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/EngineUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/src/FolderItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/FolderItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/src/MainEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/MainEngine.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -28,8 +33,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ConsoleUI/src/UImain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-714">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            <state relative-caret-position="110">
+              <caret line="74" column="4" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -40,8 +45,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/CommitObj.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="34" column="50" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
+            <state relative-caret-position="-483">
+              <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
               <folding>
                 <element signature="e#417#418#0" expanded="true" />
                 <element signature="e#445#446#0" expanded="true" />
@@ -52,16 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Engine/Engine.iml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="239" column="4" lean-forward="true" selection-start-line="239" selection-start-column="4" selection-end-line="239" selection-end-column="4" />
+            <state relative-caret-position="99">
+              <caret line="53" column="37" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4963#4964#0" expanded="true" />
@@ -81,27 +81,16 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/Desktop/commons-io-2.6.jar!/org/apache/commons/io/FileUtils.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="84" selection-start-line="84" selection-end-line="84" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/EngineUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="51" selection-start-line="51" selection-end-line="51" />
+            <state relative-caret-position="99">
+              <caret line="60" column="4" selection-start-line="60" selection-start-column="4" selection-end-line="60" selection-end-column="4" />
               <folding>
-                <element signature="e#1364#1415#1" />
-                <element signature="method#ZipFile#0;class#EngineUtils#0" />
+                <element signature="e#567#579#0" expanded="true" />
                 <element signature="e#2110#2594#0" />
                 <element signature="e#2645#2708#1" />
                 <element signature="e#2628#2710#0" />
                 <element signature="e#2734#2797#0" />
-                <element signature="method#listToString#0;class#EngineUtils#0" />
               </folding>
             </state>
           </provider>
@@ -110,8 +99,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/FolderItem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="799">
-              <caret line="47" column="42" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
+            <state relative-caret-position="-272">
+              <caret line="20" column="38" lean-forward="true" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
               <folding>
                 <element signature="e#860#861#0" expanded="true" />
                 <element signature="e#893#894#0" expanded="true" />
@@ -145,12 +134,21 @@
       <find>compa</find>
       <find>commitob</find>
       <find>scan</find>
-      <find>zip</find>
       <find>create</find>
       <find>commi</find>
-      <find>user</find>
       <find>final</find>
       <find>.zip</find>
+      <find>finali</find>
+      <find>Comm</find>
+      <find>Commi</find>
+      <find>CommitS</find>
+      <find>obj.to</find>
+      <find>comm</find>
+      <find>commit</find>
+      <find>zip</find>
+      <find>user</find>
+      <find>fina</find>
+      <find>getzipp</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -167,10 +165,10 @@
         <option value="$PROJECT_DIR$/src/Commit.java" />
         <option value="$PROJECT_DIR$/src/MainEngine.java" />
         <option value="$PROJECT_DIR$/ConsoleUI/src/UImain.java" />
-        <option value="$PROJECT_DIR$/Engine/src/CommitObj.java" />
         <option value="$PROJECT_DIR$/Engine/src/FolderItem.java" />
         <option value="$PROJECT_DIR$/Engine/src/EngineUtils.java" />
         <option value="$PROJECT_DIR$/Engine/src/MainEngine.java" />
+        <option value="$PROJECT_DIR$/Engine/src/CommitObj.java" />
       </list>
     </option>
   </component>
@@ -360,18 +358,24 @@
       <option name="project" value="LOCAL" />
       <updated>1564672957584</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Merge branch 'master' of https://github.com/drimoch/MAGIT&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;ConsoleUI/src/UImain.java&#10;#&#9;Engine/src/MainEngine.java">
+      <created>1564673107642</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1564673107642</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="91207000" />
+    <option name="totallyTimeSpent" value="108222000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.1757085" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.24939272" />
       <window_info id="Designer" order="2" />
       <window_info id="Learn" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -381,16 +385,16 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.329429" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49932885" visible="true" weight="0.28241563" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49878544" weight="0.37122557" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50067115" side_tool="true" weight="0.3285968" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50121456" side_tool="true" weight="0.28241563" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49932885" weight="0.329429" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.3285968" />
+      <window_info active="true" anchor="bottom" id="Messages" order="12" visible="true" weight="0.3285968" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -403,7 +407,7 @@
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" weight="0.1757085" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.24939272" />
       <window_info id="Designer" order="2" />
       <window_info id="Learn" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -413,12 +417,12 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.329429" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49932885" visible="true" weight="0.28241563" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49878544" visible="true" weight="0.39609236" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50067115" side_tool="true" weight="0.3285968" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50121456" side_tool="true" weight="0.28241563" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49932885" weight="0.329429" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
@@ -448,7 +452,8 @@
     <MESSAGE value="finished MainEngine.createLatestCommitMap" />
     <MESSAGE value="Merge branch 'master' of https://github.com/drimoch/MAGIT&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;ConsoleUI/src/UImain.java&#10;#&#9;Engine/Engine.iml&#10;#&#9;Engine/src/MainEngine.java" />
     <MESSAGE value="Merge branch 'master' of https://github.com/drimoch/MAGIT&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;ConsoleUI/src/UImain.java&#10;#&#9;Engine/src/MainEngine.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/drimoch/MAGIT&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;ConsoleUI/src/UImain.java&#10;#&#9;Engine/src/MainEngine.java" />
+    <MESSAGE value="Fixed issues with commit." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed issues with commit." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -460,16 +465,34 @@
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Engine/src/EngineUtils.java</url>
-          <line>50</line>
+          <url>file://$PROJECT_DIR$/Engine/src/MainEngine.java</url>
+          <line>166</line>
           <properties />
-          <option name="timeStamp" value="46" />
+          <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Engine/src/MainEngine.java</url>
-          <line>168</line>
+          <line>160</line>
           <properties />
-          <option name="timeStamp" value="49" />
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Engine/src/MainEngine.java</url>
+          <line>267</line>
+          <properties />
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Engine/src/MainEngine.java</url>
+          <line>266</line>
+          <properties />
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Engine/src/MainEngine.java</url>
+          <line>146</line>
+          <properties />
+          <option name="timeStamp" value="66" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -488,11 +511,48 @@
         <watch expression="rootDirSha" />
         <watch expression="commit" />
         <watch expression="leaves" />
+        <watch expression="mapOfLatestCommit" />
+        <watch expression="fileLines" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>commitFileSha1</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>currentLine</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fileLines</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>i_filePath</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>mapOfLatestCommit</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>result</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>deleted.isEmpty()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>commitObject</expression-string>
         <language-id>JAVA</language-id>
@@ -500,21 +560,6 @@
       </expression>
       <expression>
         <expression-string>commit</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>deletedList</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>item.getSha1()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>currentFolderItem</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -533,13 +578,6 @@
     <entry file="file://$USER_HOME$/Downloads/04. Files/src/files/SystemInputStreamExample.java" />
     <entry file="file://$USER_HOME$/Downloads/04. Files/src/files/TextFile.java" />
     <entry file="jar://$PROJECT_DIR$/../Program Files/Java/jdk1.8.0_221/src.zip!/java/util/Arrays.java" />
-    <entry file="file://$PROJECT_DIR$/ConsoleUI/src/Program.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Desktop/commons-collections4-4.4.jar!/org/apache/commons/collections4/CollectionUtils.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1319">
@@ -551,26 +589,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Engine/src/CommitObj.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="34" column="50" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
-          <folding>
-            <element signature="e#417#418#0" expanded="true" />
-            <element signature="e#445#446#0" expanded="true" />
-            <element signature="e#547#548#0" expanded="true" />
-            <element signature="e#574#575#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Engine/Engine.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/FolderItem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="47" column="42" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
+        <state relative-caret-position="-272">
+          <caret line="20" column="38" lean-forward="true" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
           <folding>
             <element signature="e#860#861#0" expanded="true" />
             <element signature="e#893#894#0" expanded="true" />
@@ -582,43 +607,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/Desktop/commons-io-2.6.jar!/org/apache/commons/io/FileUtils.class">
+    <entry file="file://$PROJECT_DIR$/ConsoleUI/src/Program.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="84" selection-start-line="84" selection-end-line="84" />
+        <state relative-caret-position="204">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Engine/src/EngineUtils.java">
+    <entry file="jar://$USER_HOME$/Desktop/commons-io-2.6.jar!/org/apache/commons/io/FileUtils.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="51" selection-start-line="51" selection-end-line="51" />
+        <state relative-caret-position="76">
+          <caret line="1026" selection-start-line="1026" selection-end-line="1026" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Engine/src/CommitObj.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-483">
+          <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
           <folding>
-            <element signature="e#1364#1415#1" />
-            <element signature="method#ZipFile#0;class#EngineUtils#0" />
-            <element signature="e#2110#2594#0" />
-            <element signature="e#2645#2708#1" />
-            <element signature="e#2628#2710#0" />
-            <element signature="e#2734#2797#0" />
-            <element signature="method#listToString#0;class#EngineUtils#0" />
+            <element signature="e#417#418#0" expanded="true" />
+            <element signature="e#445#446#0" expanded="true" />
+            <element signature="e#547#548#0" expanded="true" />
+            <element signature="e#574#575#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ConsoleUI/src/UImain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-714">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        <state relative-caret-position="110">
+          <caret line="74" column="4" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Engine/src/EngineUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="60" column="4" selection-start-line="60" selection-start-column="4" selection-end-line="60" selection-end-column="4" />
+          <folding>
+            <element signature="e#567#579#0" expanded="true" />
+            <element signature="e#2110#2594#0" />
+            <element signature="e#2645#2708#1" />
+            <element signature="e#2628#2710#0" />
+            <element signature="e#2734#2797#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="239" column="4" lean-forward="true" selection-start-line="239" selection-start-column="4" selection-end-line="239" selection-end-column="4" />
+        <state relative-caret-position="99">
+          <caret line="53" column="37" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#4963#4964#0" expanded="true" />

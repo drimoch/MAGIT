@@ -31,41 +31,41 @@ public class UImain {
 
 
     public void run() throws IOException {
-        String userName;
-        System.out.println(String.format("Hello %s", engine.getUserName()));
-        Scanner scanner = new Scanner(System.in);
-        int userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
-        while (userChoice != m_numOfChoicesStartMenu) {
-            switch (userChoice) {
-                case 1:
-                    System.out.println("Enter new user name: ");
-                    userName = scanner.nextLine();
-                    engine.setUserName(userName);
-                    userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
-                    break;
-                case 2:
-                    //here we will write code that loads a repo
-                    //and at the end of it, the main menu will be displayed
-                    int mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
-                    while (mainMenuChoice >= 1 && mainMenuChoice <= m_numOfChoicesMainMenu) {
-                        switch (mainMenuChoice) {
-                            case 1:
-                                break;
-                            case 9:
-                                System.exit(0);
-                                break;
-                            default:
-                                if (mainMenuChoice != m_numOfChoicesMainMenu) {
-                                    mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
-                                }
-                        }
-                    }
-
-                case 3:
-                    System.exit(0);
-                    break;
-            }
-        }
+//        String userName;
+//        System.out.println(String.format("Hello %s", engine.getUserName()));
+//        Scanner scanner = new Scanner(System.in);
+//        int userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
+//        while (userChoice != m_numOfChoicesStartMenu) {
+//            switch (userChoice) {
+//                case 1:
+//                    System.out.println("Enter new user name: ");
+//                    userName = scanner.nextLine();
+//                    engine.setUserName(userName);
+//                    userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
+//                    break;
+//                case 2:
+//                    //here we will write code that loads a repo
+//                    //and at the end of it, the main menu will be displayed
+//                    int mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
+//                    while (mainMenuChoice >= 1 && mainMenuChoice <= m_numOfChoicesMainMenu) {
+//                        switch (mainMenuChoice) {
+//                            case 1:
+//                                break;
+//                            case 9:
+//                                System.exit(0);
+//                                break;
+//                            default:
+//                                if (mainMenuChoice != m_numOfChoicesMainMenu) {
+//                                    mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
+//                                }
+//                        }
+//                    }
+//
+//                case 3:
+//                    System.exit(0);
+//                    break;
+//            }
+//        }
 
 
        // initRepository();
@@ -115,9 +115,9 @@ public class UImain {
     public void displayChanges(Map<String, String> deleted, Map<String, String> added, Map<String, String> changed) {
         //TODO move logic to engine, send back just the message!
         String deletedMessage, addedMessage, changedMessage;
-        deletedMessage = (deleted.isEmpty() ? "No files were deleted" : "Files deleted from directory:\n");
-        changedMessage = (changed.isEmpty() ? "No files were changed" : "Files changed in directory:\n");
-        addedMessage = (deleted.isEmpty() ? "No files were added" : "Files added to directory:\n");
+        deletedMessage = (deleted.isEmpty() ? "No files were deleted\n" : "Files deleted from directory:\n");
+        changedMessage = (changed.isEmpty() ? "No files were changed\n" : "Files changed in directory:\n");
+        addedMessage = (added.isEmpty() ? "No files were added\n" : "Files added to directory:\n");
         List <String>d= deleted.values().stream().collect(Collectors.toList());
         List <String>a= added.values().stream().collect(Collectors.toList());
         List <String>c= changed.values().stream().collect(Collectors.toList());

@@ -23,7 +23,7 @@ import java.util.zip.ZipOutputStream;
 
 public class MainEngine {
     public static final String m_relativePathToObjDir = ".magit\\objects";
-    private static String m_currentRepository = "C:\\Users\\David\\Documents\\TestRepo";
+    private static String m_currentRepository = "C:\\tester";
     private static String m_currentUserName = "Administrator";
     public String userName;
 
@@ -91,9 +91,7 @@ public class MainEngine {
         return DigestUtils.sha1Hex(res);
     }
 
-    public static void createCommit(Map<String, List<String>> sha1Map, String path) {
-        //get master commit fro
-    }
+
 
     public static void initRepo(String path, String name) throws IOException {
         //take care of  exceptions when using this
@@ -237,7 +235,7 @@ public class MainEngine {
 
     }
 
-    
+
 
     public void initRepository(String rootDirPath, String repoName) throws IOException {
         initRepo(rootDirPath, repoName);
@@ -265,32 +263,29 @@ public class MainEngine {
         obj.changed.forEach((key,string)->EngineUtils.ZipFile(key,string,targetPath));
         obj.added.forEach((key,string)->EngineUtils.ZipFile(key,string,targetPath));
         foldersToFile(mapOfdif, targetPath);
-        StringToZipFile(obj.toString(), targetPath, obj.CommitSHA1 );
-        EngineUtils.overWriteFileContent(m_currentRepository+"\\.magit\\master", obj.CommitSHA1);
+
+        String newCommitContent=obj.toString();
+        String newCommitSha1=DigestUtils.sha1Hex(newCommitContent);
+
+        EngineUtils.StringToZipFile(newCommitContent, targetPath, newCommitSha1 );
+        EngineUtils.overWriteFileContent(m_currentRepository+"\\.magit\\branches\\master", newCommitSha1);
     }
     public void foldersToFile(Map<String, List<FolderItem>> mapOfdif ,String targetPath){
 
        mapOfdif.forEach((key, item)-> {
            try {
 
-               StringToZipFile( EngineUtils.listToString(item,"\n"), targetPath, key);
+               EngineUtils.StringToZipFile( EngineUtils.listToString(item,"\n"), targetPath, key);
            } catch (IOException e) {
                e.printStackTrace();
            }
        });
 
     }
-    public void StringToZipFile(String content, String targetPath, String fileName ) throws IOException {
+    //checkout related functions:
+    // map the commit and parse it into WC
+    
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(content);
-        File f = new File(targetPath+fileName+".zip");
-        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));
-        ZipEntry e = new ZipEntry(fileName);
-        out.putNextEntry(e);
-        byte[] data = sb.toString().getBytes();
-        out.write(data, 0, data.length);
-        out.closeEntry();
-        out.close();
-    }
+
+
 }
