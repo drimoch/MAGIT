@@ -1,4 +1,9 @@
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -8,6 +13,8 @@ public class UImain {
     private final int m_numOfChoicesMainMenu = 9;
     private final String m_startMenuText;
     private final String m_mainMenuText;
+    private String m_currentRepository="C:\\tester";
+    private static String m_currentUserName = "Administrator";
     public MainEngine engine;
 
     public UImain() {
@@ -69,50 +76,109 @@ public class UImain {
 
 
        // initRepository();
-        commit();
+       commit();
+        createBranch();
     }
 
-    public void commit() {
-
-
-        Map<String, List<FolderItem>> mapOfdif = new HashMap<>();
-        CommitObj commitObject;
-        String doNext, WCsha1;
+    public void validateCommit(CommitObj commitObject, Map<String, List<FolderItem>> mapOfdif) throws IOException {
         Scanner scanner = new Scanner(System.in);
+        String doNext = scanner.nextLine();
+        while (!doNext.equalsIgnoreCase("y") && !doNext.equalsIgnoreCase("n")) {
+            System.out.println("No such command, please enter y or n");
+            doNext = scanner.nextLine();
+        }
+        if (doNext.equalsIgnoreCase("y")) {
+            System.out.println("Give a short description of the new commit");
+            commitObject.setCommitMessage(scanner.nextLine());
+            commitObject.setUserName(engine.userName);
+            engine.finalizeCommit(commitObject,mapOfdif, this.m_currentRepository);
+
+
+        } else System.out.println("Commit canceled, all changes discarded");
+        return;
+    }
+    public void commit() {
+        Map<String, List<FolderItem>> mapOfdif = new HashMap<>();
+        CommitObj commitObject=new CommitObj();
         try {
 
-            commitObject = engine.commit(mapOfdif);
-            if (commitObject==null) {
+            if (!engine.checkForChanges(mapOfdif, commitObject,this.m_currentRepository )) {
                 System.out.println("No changes detected, nothing to commit");
                 return;
             } else {
-                displayChanges(commitObject.deleted, commitObject.added, commitObject.changed);
-                System.out.println("Commit changes? press (y)es to commit (n)o to cancel operation ");
-                doNext = scanner.nextLine();
-                while (!doNext.equalsIgnoreCase("y") && !doNext.equalsIgnoreCase("n")) {
-                    System.out.println("No such command, please enter y or n");
-                    doNext = scanner.nextLine();
-                }
-                if (doNext.equalsIgnoreCase("y")) {
-                    System.out.println("Give a short description of the current commit");
-                    commitObject.setCommitMessage(scanner.nextLine());
-                    commitObject.setUserName(engine.userName);
-                    engine.finalizeCommit(commitObject,mapOfdif);
-
-
-                } else System.out.println("Commit canceled");
+                displayChanges(commitObject);
+                System.out.println("Submit commit changes? press (y)es to commit (n)o to cancel operation ");
+                validateCommit(commitObject, mapOfdif);
                 return;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println();
+    }
 
+    public void saveOpenChanges(){
+
+        Map<String, List<FolderItem>> mapOfdif = new HashMap<>();
+        CommitObj commitObject=null;
+        try {
+
+            if (engine.checkForChanges(mapOfdif, commitObject, this.m_currentRepository )) {
+                System.out.println("System has detected the following unsaved changes: ");
+                displayChanges(commitObject);
+                System.out.println("Would you like to save these changes before performing the branch operation?\n" +
+                        "Unsaved changes will be deleted permenantly! \n" + "press (y)es to save, (n)o to continue without saving");
+                validateCommit(commitObject,mapOfdif);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println();
+    }
+
+    public void checkOut(){
+
+        Scanner scanner= new Scanner(System.in);
+        System.out.println("Please specify the branch name you would like to switch to");
+        String branchName = scanner.nextLine();
+        while(!FileUtils.getFile(this.m_currentRepository+"\\.magit\\branches\\"+ branchName).exists()&& branchName.equals(27)) {
+        System.out.format("There is no branch by the name %S",branchName, ". Specify a different branch or press ESC to cancel operation");
+        }
+        if (branchName.equals(27)){
+        System.out.println("Operation canceled");
+            return;
+        }
+        else
+        saveOpenChanges();
+        engine.switchHeadBranch(branchName, m_currentRepository);
+
+
+
+    }
+    public String createBranch() throws IOException {
+
+        Scanner scanner= new Scanner(System.in);
+        String relativePath= this.m_currentRepository+"\\.magit\\branches\\";
+        File head= new File(relativePath+"HEAD");
+        File currentHead= new File(relativePath+FileUtils.readFileToString(head, StandardCharsets.UTF_8));
+
+        System.out.println("Please enter the new branch name");
+        String branchName = scanner.nextLine();
+        while(FileUtils.getFile(relativePath+branchName).exists()){
+                System.out.println("Branch exists, please enter a different name");
+                branchName= scanner.nextLine();
+        }
+
+        EngineUtils.createBranchFile(m_currentRepository, branchName);
+
+
+    return branchName;
 
     }
 
 
-    public void displayChanges(Map<String, String> deleted, Map<String, String> added, Map<String, String> changed) {
+    public void displayChanges(CommitObj obj) {
+        Map<String, String> deleted= obj.deleted,  added= obj.added, changed= obj.changed;
         //TODO move logic to engine, send back just the message!
         String deletedMessage, addedMessage, changedMessage;
         deletedMessage = (deleted.isEmpty() ? "No files were deleted\n" : "Files deleted from directory:\n");
@@ -159,6 +225,7 @@ public class UImain {
 //            numOfPlayersStr = Console.ReadLine();
 //        }
     }
+
 
     private int inputValidation(String i_choice, int i_numOfChoices) {
         Scanner scanner = new Scanner(System.in);

@@ -138,28 +138,29 @@ public class MainEngine {
         m_currentRepository = i_currentRepository;
     }
 
-    public CommitObj commit(Map<String, List<FolderItem>> mapOfdif) throws IOException {
-        CommitObj commit=null;
+    public boolean checkForChanges(Map<String, List<FolderItem>> mapOfdif, CommitObj commit, String currentRepo) throws IOException {
         Map<String, List<FolderItem>> mapOfLatestCommit= new HashMap<>();
         Map<String, List<FolderItem>> mapOfWC=new HashMap<>();
         String latestCommitSha1;
 
-        latestCommitSha1= EngineUtils.getLastCommitSha(m_currentRepository);
-        String WCSha1= scanWorkingCopy(m_currentRepository, mapOfWC);
+        latestCommitSha1= EngineUtils.getLastCommitSha(currentRepo);
+        String WCSha1= scanWorkingCopy(currentRepo, mapOfWC);
         if(!WCSha1.equals(latestCommitSha1)){
-                commit= new CommitObj(latestCommitSha1, WCSha1);
+                commit.setCommitSHA1(WCSha1);
+                commit.setPreviousCommit(latestCommitSha1);
                 if(!latestCommitSha1.equals(""))
-                mapOfLatestCommit= createLatestCommitMap(latestCommitSha1);
-                compareWCtoCommit(mapOfWC, mapOfLatestCommit,WCSha1,latestCommitSha1,m_currentRepository,commit.deleted,commit.added,commit.changed);
+                mapOfLatestCommit= createLatestCommitMap(latestCommitSha1,currentRepo);
+                compareWCtoCommit(mapOfWC, mapOfLatestCommit,WCSha1,latestCommitSha1,currentRepo,commit.deleted,commit.added,commit.changed);
 
-        }
-        for (String key : mapOfWC.keySet()) {
-            if (!mapOfLatestCommit.containsKey(key)) {
-                mapOfdif.put(key, mapOfWC.get(key));
+            for (String key : mapOfWC.keySet()) {
+                if (!mapOfLatestCommit.containsKey(key)) {
+                    mapOfdif.put(key, mapOfWC.get(key));
+                }
             }
+            return true;
         }
-        return commit;
-
+        else
+        return false;
 
     }
 
@@ -241,25 +242,25 @@ public class MainEngine {
         initRepo(rootDirPath, repoName);
     }
 
-    public Map<String, List<FolderItem>> createLatestCommitMap(String i_rootDirSha) throws IOException {
+    public Map<String, List<FolderItem>> createLatestCommitMap(String i_rootDirSha, String currentRepo) throws IOException {
         Map<String, List<FolderItem>> result = new HashMap<String, List<FolderItem>>();
-        createCommitMapRec(i_rootDirSha, result);
+        createCommitMapRec(i_rootDirSha, result, currentRepo);
         return result;
     }
 
-    private void createCommitMapRec(String i_rootDirSha, Map<String, List<FolderItem>> i_commitMap) throws IOException {
-        List<FolderItem> rootDir = EngineUtils.parseToFolderList(m_currentRepository + "\\" + m_relativePathToObjDir + "\\" + i_rootDirSha + ".zip");
+    private void createCommitMapRec(String i_rootDirSha, Map<String, List<FolderItem>> i_commitMap, String currentRepo) throws IOException {
+        List<FolderItem> rootDir = EngineUtils.parseToFolderList(currentRepo+ "\\" + m_relativePathToObjDir + "\\" + i_rootDirSha + ".zip");
         i_commitMap.put(i_rootDirSha, rootDir);
         for (FolderItem item : rootDir) {
             if (item.getType().equals("folder")) {
-                createCommitMapRec(item.getSha1(), i_commitMap);
+                createCommitMapRec(item.getSha1(), i_commitMap, currentRepo);
             }
         }
     }
 
-    public void finalizeCommit(CommitObj obj, Map<String, List<FolderItem>> mapOfdif) throws IOException {
+    public void finalizeCommit(CommitObj obj, Map<String, List<FolderItem>> mapOfdif, String currentRepo) throws IOException {
         //zip files and create the commit file. change head branch pointer)
-        String targetPath=m_currentRepository+"\\.magit\\objects\\";
+        String targetPath=currentRepo+"\\.magit\\objects\\";
         obj.changed.forEach((key,string)->EngineUtils.ZipFile(key,string,targetPath));
         obj.added.forEach((key,string)->EngineUtils.ZipFile(key,string,targetPath));
         foldersToFile(mapOfdif, targetPath);
@@ -268,7 +269,7 @@ public class MainEngine {
         String newCommitSha1=DigestUtils.sha1Hex(newCommitContent);
 
         EngineUtils.StringToZipFile(newCommitContent, targetPath, newCommitSha1 );
-        EngineUtils.overWriteFileContent(m_currentRepository+"\\.magit\\branches\\master", newCommitSha1);
+        EngineUtils.overWriteFileContent(currentRepo+"\\.magit\\branches\\master", newCommitSha1);
     }
     public void foldersToFile(Map<String, List<FolderItem>> mapOfdif ,String targetPath){
 
@@ -282,9 +283,44 @@ public class MainEngine {
        });
 
     }
-    //checkout related functions:
-    // map the commit and parse it into WC
-    
+
+    public void switchHeadBranch(String branchName, String currentRepository){
+
+        File branchFile= FileUtils.getFile(currentRepository+".magit\\branches\\"+ branchName);
+
+        try {
+
+            String sha1= FileUtils.readFileToString(branchFile);
+            Arrays.stream(FileUtils.getFile(currentRepository).listFiles()).
+                    filter(i-> !i.getName().equals(".magit")).
+                    map(i->FileUtils.deleteQuietly(FileUtils.getFile(i)));
+            EngineUtils.overWriteFileContent(currentRepository+".magit\\branches\\HEAD", branchName);
+            Map<String, List<FolderItem>> mapOfCommit= createLatestCommitMap(sha1,currentRepository);
+            parseMapToWC(mapOfCommit,sha1,currentRepository+"\\.magit\\objects\\",currentRepository);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    public void parseMapToWC(Map <String,List< FolderItem>> dirMap, String dirRootSHA1, String sourcePath, String destPath){
+        String newDestPath;
+       for( FolderItem i: dirMap.get(dirRootSHA1)){
+           if (i.getType().equals("file")){
+
+                EngineUtils.extractFile(sourcePath+i.getSha1()+".zip", i.getSha1(),destPath);
+                return;
+           }
+           else{
+               newDestPath= destPath.concat(i.getItemName());
+               File folder = new File(destPath);
+               folder.mkdir();
+               parseMapToWC(dirMap, i.getSha1(),sourcePath, newDestPath);
+           }
+       }
+
+
+    }
 
 
 

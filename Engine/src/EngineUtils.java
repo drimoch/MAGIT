@@ -1,16 +1,18 @@
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.io.FileUtils;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-public class EngineUtils {
+public class EngineUtils{
     private static String m_relativeBranchPath = "\\.magit\\branches";
 
     public static List<FolderItem> parseToFolderList(String i_filePath) throws IOException {
@@ -45,24 +47,25 @@ public class EngineUtils {
     }
 
     public static String getLastCommitSha(String i_currentRepository) throws IOException {
-        String branchName,commitFileSha1;
-        List<String> res=new LinkedList<>();
+        String branchName, commitFileSha1;
+        List<String> res;
         File headFile = FileUtils.getFile(i_currentRepository + m_relativeBranchPath + "\\HEAD");
         branchName = FileUtils.readFileToString(headFile, StandardCharsets.UTF_8);
-        File branchFile = FileUtils.getFile(i_currentRepository + m_relativeBranchPath + "\\"+ branchName);
+        File branchFile = FileUtils.getFile(i_currentRepository + m_relativeBranchPath + "\\" + branchName);
         commitFileSha1 = FileUtils.readFileToString(branchFile, StandardCharsets.UTF_8);
 
-        if(commitFileSha1.equals(""))
+        if (commitFileSha1.equals(""))
             return "";
-         res= getZippedFileLines(i_currentRepository+"\\.magit\\objects\\"+commitFileSha1+".zip");
-        return res.get(0);
+        res = getZippedFileLines(i_currentRepository + "\\.magit\\objects\\" + commitFileSha1 + ".zip");
+        String result= res.get(0);
+        return result;
     }
 
-    public static void StringToZipFile(String content, String targetPath, String fileName ) throws IOException {
+    public static void StringToZipFile(String content, String targetPath, String fileName) throws IOException {
 
         StringBuilder sb = new StringBuilder();
         sb.append(content);
-        File f = new File(targetPath+fileName+".zip");
+        File f = new File(targetPath + fileName + ".zip");
         ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));
         ZipEntry e = new ZipEntry(fileName);
         out.putNextEntry(e);
@@ -72,10 +75,10 @@ public class EngineUtils {
         out.close();
     }
 
-    public static void overWriteFileContent(String path, String CommitSHA1){
+    public static void overWriteFileContent(String path, String Content) {
         try {
-            FileWriter fw =new FileWriter(path, false);
-            fw.write(CommitSHA1);
+            FileWriter fw = new FileWriter(path, false);
+            fw.write(Content);
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,13 +111,45 @@ public class EngineUtils {
         }
 
     }
-    public static String listToString(List <?> list, String delimiter){
-        List<String> res=new LinkedList<>();
-        list.forEach(i->res.add(i.toString()));
-        String temp= String.join(delimiter,res);
+
+    public static String listToString(List<?> list, String delimiter) {
+        List<String> res = new LinkedList<>();
+        list.forEach(i -> res.add(i.toString()));
+        String temp = String.join(delimiter, res);
         return temp;
     }
 
+
+    public static void extractFile(String zipPath, String entry, String destPath)  {
+        try {
+
+            ZipFile zipFile = null;
+            zipFile = new ZipFile(zipPath);
+        ZipEntry zipEntry = zipFile.getEntry(entry);
+
+        InputStream inputStream = zipFile.getInputStream(zipEntry);
+        FileOutputStream outputStream = new FileOutputStream(destPath);
+
+        int data = inputStream.read();
+        while (data != -1) {
+            outputStream.write(data);
+            data = inputStream.read();
+        }
+        outputStream.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+    public static void createBranchFile(String destPath,String branchName) throws IOException {
+
+        File newBranch= new File(destPath+ "\\.magit\\branches\\"+branchName);
+        String head=FileUtils.readFileToString(FileUtils.getFile(destPath+ "\\.magit\\branches\\HEAD"));
+        String mainBranch=  FileUtils.readFileToString(FileUtils.getFile(destPath+ "\\.magit\\branches\\" +head));
+        FileUtils.writeStringToFile(newBranch,mainBranch);
+
+    }
+
+}
 
 

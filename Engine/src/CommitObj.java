@@ -5,11 +5,10 @@ import java.util.*;
 
 public class CommitObj {
     String rootDirSha1;
+    String PreviousCommit;
     private String m_submitterName;
     String dateCreated;
     String commitMessage;
-    String PreviousCommit;
-    String CommitSHA1;
 
     public Map<String, String> added;
     public Map<String, String> changed;
@@ -23,9 +22,8 @@ public class CommitObj {
         m_submitterName = i_userNAme;
     }
 
-    CommitObj(String o_PreviousCommit, String o_rootSHA1) {
-        PreviousCommit = o_PreviousCommit;
-        rootDirSha1 = o_rootSHA1;
+    CommitObj() {
+
         deleted = new HashMap<>();
         changed = new HashMap<>();
         added = new HashMap<>();
@@ -33,15 +31,19 @@ public class CommitObj {
         Date date = new Date();
         dateCreated = dateFormat.format(date);
     }
-
+    public void setPreviousCommit(String commitSHA1){
+        PreviousCommit=commitSHA1;
+    }
+    public void setCommitSHA1(String commitSHA1){
+        rootDirSha1=commitSHA1;
+    }
     public void setCommitMessage(String message) {
         this.commitMessage = message;
     }
 
-
     @Override
     public String toString() {
-        return rootDirSha1+"\n" + m_submitterName + "\n" + dateCreated + "\n" + commitMessage + "\n" + PreviousCommit;
+        return rootDirSha1 + "\n" + PreviousCommit +"\n" + m_submitterName + "\n" + dateCreated + "\n" + commitMessage ;
     }
 
 }
