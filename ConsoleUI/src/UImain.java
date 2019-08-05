@@ -13,7 +13,7 @@ public class UImain {
     private final int m_numOfChoicesMainMenu = 9;
     private final String m_startMenuText;
     private final String m_mainMenuText;
-    private String m_currentRepository="C:\\tester";
+    private String m_currentRepository="C:\\test";
     private static String m_currentUserName = "Administrator";
     public MainEngine engine;
 
@@ -40,7 +40,7 @@ public class UImain {
     public void run() throws IOException {
 //        String userName;
 //        System.out.println(String.format("Hello %s", engine.getUserName()));
-//        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 //        int userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
 //        while (userChoice != m_numOfChoicesStartMenu) {
 //            switch (userChoice) {
@@ -75,9 +75,11 @@ public class UImain {
 //        }
 
 
-       // initRepository();
+       initRepository();
+       String e=scanner.nextLine();
        commit();
-        createBranch();
+       createBranch();
+       checkOut();
     }
 
     public void validateCommit(CommitObj commitObject, Map<String, List<FolderItem>> mapOfdif) throws IOException {
@@ -119,7 +121,7 @@ public class UImain {
     public void saveOpenChanges(){
 
         Map<String, List<FolderItem>> mapOfdif = new HashMap<>();
-        CommitObj commitObject=null;
+        CommitObj commitObject=new CommitObj();
         try {
 
             if (engine.checkForChanges(mapOfdif, commitObject, this.m_currentRepository )) {
@@ -141,8 +143,9 @@ public class UImain {
         Scanner scanner= new Scanner(System.in);
         System.out.println("Please specify the branch name you would like to switch to");
         String branchName = scanner.nextLine();
-        while(!FileUtils.getFile(this.m_currentRepository+"\\.magit\\branches\\"+ branchName).exists()&& branchName.equals(27)) {
-        System.out.format("There is no branch by the name %S",branchName, ". Specify a different branch or press ESC to cancel operation");
+        while(!FileUtils.getFile(this.m_currentRepository+"\\.magit\\branches\\"+ branchName).exists()&& !branchName.equals(27)) {
+        System.out.format("There is no branch by the name %s. Specify a different branch or press ESC to cancel operation",branchName);
+                 branchName = scanner.nextLine();
         }
         if (branchName.equals(27)){
         System.out.println("Operation canceled");

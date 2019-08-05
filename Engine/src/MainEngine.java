@@ -146,7 +146,7 @@ public class MainEngine {
         latestCommitSha1= EngineUtils.getLastCommitSha(currentRepo);
         String WCSha1= scanWorkingCopy(currentRepo, mapOfWC);
         if(!WCSha1.equals(latestCommitSha1)){
-                commit.setCommitSHA1(WCSha1);
+            commit.setCommitSHA1(WCSha1);
                 commit.setPreviousCommit(latestCommitSha1);
                 if(!latestCommitSha1.equals(""))
                 mapOfLatestCommit= createLatestCommitMap(latestCommitSha1,currentRepo);
@@ -286,14 +286,16 @@ public class MainEngine {
 
     public void switchHeadBranch(String branchName, String currentRepository){
 
-        File branchFile= FileUtils.getFile(currentRepository+".magit\\branches\\"+ branchName);
+        File branchFile= FileUtils.getFile(currentRepository+"\\.magit\\branches\\"+ branchName);
 
         try {
-
+            String skip=currentRepository+"\\.magit";
             String sha1= FileUtils.readFileToString(branchFile);
-            Arrays.stream(FileUtils.getFile(currentRepository).listFiles()).
-                    filter(i-> !i.getName().equals(".magit")).
-                    map(i->FileUtils.deleteQuietly(FileUtils.getFile(i)));
+            for(File i: FileUtils.getFile(currentRepository).listFiles()){
+                if(!i.getPath().contains(skip))
+                    FileUtils.deleteQuietly(i);
+            }
+
             EngineUtils.overWriteFileContent(currentRepository+".magit\\branches\\HEAD", branchName);
             Map<String, List<FolderItem>> mapOfCommit= createLatestCommitMap(sha1,currentRepository);
             parseMapToWC(mapOfCommit,sha1,currentRepository+"\\.magit\\objects\\",currentRepository);
