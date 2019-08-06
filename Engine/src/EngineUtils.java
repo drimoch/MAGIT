@@ -1,3 +1,4 @@
+import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.io.FileUtils;
 
@@ -122,20 +123,10 @@ public class EngineUtils{
 
     public static void extractFile(String zipPath, String entry, String destPath)  {
         try {
+            File f= new File(destPath);
+            String content= String.join("",getZippedFileLines(zipPath));
+            FileUtils.writeStringToFile(f,content);
 
-            ZipFile zipFile = null;
-            zipFile = new ZipFile(zipPath);
-        ZipEntry zipEntry = zipFile.getEntry(entry);
-
-        InputStream inputStream = zipFile.getInputStream(zipEntry);
-        FileOutputStream outputStream = new FileOutputStream(destPath);
-
-        int data = inputStream.read();
-        while (data != -1) {
-            outputStream.write(data);
-            data = inputStream.read();
-        }
-        outputStream.close();
 
         } catch (IOException e) {
             e.printStackTrace();

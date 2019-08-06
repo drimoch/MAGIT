@@ -38,47 +38,47 @@ public class UImain {
 
 
     public void run() throws IOException {
-//        String userName;
-//        System.out.println(String.format("Hello %s", engine.getUserName()));
+       String userName;
+       System.out.println(String.format("Hello %s", engine.getUserName()));
         Scanner scanner = new Scanner(System.in);
-//        int userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
-//        while (userChoice != m_numOfChoicesStartMenu) {
-//            switch (userChoice) {
-//                case 1:
-//                    System.out.println("Enter new user name: ");
-//                    userName = scanner.nextLine();
-//                    engine.setUserName(userName);
-//                    userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
-//                    break;
-//                case 2:
-//                    //here we will write code that loads a repo
-//                    //and at the end of it, the main menu will be displayed
-//                    int mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
-//                    while (mainMenuChoice >= 1 && mainMenuChoice <= m_numOfChoicesMainMenu) {
-//                        switch (mainMenuChoice) {
-//                            case 1:
-//                                break;
-//                            case 9:
-//                                System.exit(0);
-//                                break;
-//                            default:
-//                                if (mainMenuChoice != m_numOfChoicesMainMenu) {
-//                                    mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
-//                                }
-//                        }
-//                    }
+       int userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
+       while (userChoice != m_numOfChoicesStartMenu) {
+           switch (userChoice) {
+               case 1:
+                   System.out.println("Enter new user name: ");
+                   userName = scanner.nextLine();
+                   engine.setUserName(userName);
+                   userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
+                   break;
+               case 2:
+                   //here we will write code that loads a repo
+                   //and at the end of it, the main menu will be displayed
+                   int mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
+                   while (mainMenuChoice >= 1 && mainMenuChoice <= m_numOfChoicesMainMenu) {
+                       switch (mainMenuChoice) {
+                           case 1:
+                               break;
+                           case 9:
+                               System.exit(0);
+                               break;
+                           default:
+                               if (mainMenuChoice != m_numOfChoicesMainMenu) {
+                                   mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
+                               }
+                       }
+                   }
 //
-//                case 3:
-//                    System.exit(0);
-//                    break;
-//            }
-//        }
+               case 3:
+                   System.exit(0);
+                   break;
+            }
+        }
 
 
-       initRepository();
-       String e=scanner.nextLine();
-       commit();
-       createBranch();
+      initRepository();
+       //String e=scanner.nextLine();
+       //commit();
+       //createBranch();
        checkOut();
     }
 
@@ -221,12 +221,12 @@ public class UImain {
         return inputValidation(userChoice, i_numOfOptions);
 
 
-//        string numOfPlayersStr = Console.ReadLine();
-//        while (!menuInputValidation(numOfPlayersStr, "1", "2"))
-//        {
-//            Console.WriteLine("Invalid input. Please type 1 or 2:");
-//            numOfPlayersStr = Console.ReadLine();
-//        }
+//       string numOfPlayersStr = Console.ReadLine();
+//       while (!menuInputValidation(numOfPlayersStr, "1", "2"))
+//       {
+//           Console.WriteLine("Invalid input. Please type 1 or 2:");
+//           numOfPlayersStr = Console.ReadLine();
+//       }
     }
 
 

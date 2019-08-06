@@ -290,15 +290,16 @@ public class MainEngine {
 
         try {
             String skip=currentRepository+"\\.magit";
-            String sha1= FileUtils.readFileToString(branchFile);
+            String Commitsha1= FileUtils.readFileToString(branchFile), rootsha1;
             for(File i: FileUtils.getFile(currentRepository).listFiles()){
                 if(!i.getPath().contains(skip))
                     FileUtils.deleteQuietly(i);
             }
 
-            EngineUtils.overWriteFileContent(currentRepository+".magit\\branches\\HEAD", branchName);
-            Map<String, List<FolderItem>> mapOfCommit= createLatestCommitMap(sha1,currentRepository);
-            parseMapToWC(mapOfCommit,sha1,currentRepository+"\\.magit\\objects\\",currentRepository);
+            EngineUtils.overWriteFileContent(currentRepository+"\\.magit\\branches\\HEAD", branchName);
+            rootsha1= EngineUtils.getLastCommitSha(currentRepository);
+            Map<String, List<FolderItem>> mapOfCommit= createLatestCommitMap(rootsha1,currentRepository);
+            parseMapToWC(mapOfCommit,rootsha1,currentRepository+"\\.magit\\objects\\",currentRepository);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -310,14 +311,13 @@ public class MainEngine {
        for( FolderItem i: dirMap.get(dirRootSHA1)){
            if (i.getType().equals("file")){
 
-                EngineUtils.extractFile(sourcePath+i.getSha1()+".zip", i.getSha1(),destPath);
+                EngineUtils.extractFile(sourcePath+i.getSha1()+".zip", i.getSha1(),destPath+"\\"+i.getItemName());
                 return;
            }
            else{
-               newDestPath= destPath.concat(i.getItemName());
-               File folder = new File(destPath);
+               File folder = new File(destPath+"\\"+i.getItemName());
                folder.mkdir();
-               parseMapToWC(dirMap, i.getSha1(),sourcePath, newDestPath);
+               parseMapToWC(dirMap, i.getSha1(),sourcePath, destPath+"\\"+i.getItemName());
            }
        }
 
