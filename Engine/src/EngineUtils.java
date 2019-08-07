@@ -47,7 +47,7 @@ public class EngineUtils{
         return fileLines;
     }
 
-    public static String getLastCommitSha(String i_currentRepository) throws IOException {
+    public static String getLastCommitRoot(String i_currentRepository) throws IOException {
         String branchName, commitFileSha1;
         List<String> res;
         File headFile = FileUtils.getFile(i_currentRepository + m_relativeBranchPath + "\\HEAD");

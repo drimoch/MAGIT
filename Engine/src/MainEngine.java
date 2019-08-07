@@ -1,6 +1,7 @@
 import com.sun.deploy.util.StringUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections4.Equator;
+import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -122,28 +123,13 @@ public class MainEngine {
 
     //COMMIT RELATED FUNCTIONS
 
-    public static String getUserName() {
-        return m_currentUserName;
-    }
-
-    public static void setUserName(String i_userName) {
-        m_currentUserName = i_userName;
-    }
-
-    public static String getCurrentRepository() {
-        return m_currentRepository;
-    }
-
-    public static void setCurrentRepository(String i_currentRepository) {
-        m_currentRepository = i_currentRepository;
-    }
 
     public boolean checkForChanges(Map<String, List<FolderItem>> mapOfdif, CommitObj commit, String currentRepo) throws IOException {
         Map<String, List<FolderItem>> mapOfLatestCommit= new HashMap<>();
         Map<String, List<FolderItem>> mapOfWC=new HashMap<>();
         String latestCommitSha1;
 
-        latestCommitSha1= EngineUtils.getLastCommitSha(currentRepo);
+        latestCommitSha1= EngineUtils.getLastCommitRoot(currentRepo);
         String WCSha1= scanWorkingCopy(currentRepo, mapOfWC);
         if(!WCSha1.equals(latestCommitSha1)){
             commit.setCommitSHA1(WCSha1);
@@ -236,6 +222,25 @@ public class MainEngine {
 
     }
 
+    public List<String> displayLastCommitDetails(String currRepo) throws IOException {
+        Map<String, List<FolderItem>> result;
+        String rootSha1=EngineUtils.getLastCommitRoot(m_currentRepository);
+        result= createLatestCommitMap(rootSha1, currRepo);
+        List<String> objects= new LinkedList<>();
+        stringifyRepo(result,currRepo,rootSha1,objects);
+        return objects;
+
+
+    }
+    public void stringifyRepo( Map<String, List<FolderItem>> map, String repo, String root, List<String> objects){
+        List <FolderItem> lst= map.get(root);
+        for(FolderItem i: lst){
+            objects.add(i.getDetails()+"\n " +
+                    "path:"+ repo);
+            if(i.getType().equals("folder"))
+                stringifyRepo(map, repo+"\\"+i.getItemName(), i.getSha1(),objects);
+        }
+    }
 
 
     public void initRepository(String rootDirPath, String repoName) throws IOException {
@@ -256,6 +261,27 @@ public class MainEngine {
                 createCommitMapRec(item.getSha1(), i_commitMap, currentRepo);
             }
         }
+    }
+
+    public List<String> listAllBranches(String currentRepo) throws IOException {
+        File branches= FileUtils.getFile(currentRepo+ "\\.magit\\branches");
+        String sha1;
+        List <String> branchesList= new LinkedList<>();
+        for(File i: branches.listFiles())
+        {
+            if(!i.getPath().equals(currentRepo+ "\\.magit\\branches\\HEAD")) {
+                sha1= EngineUtils.getZippedFileLines(i.getPath()).get(0);
+                branchesList.add(i.getName()+"\n"+
+                        EngineUtils.listToString(EngineUtils.getZippedFileLines(currentRepo+"\\.magit\\objects\\"+sha1+".zip"),", "));
+
+            }
+
+        }
+        return branchesList;
+    }
+
+    public void mapActiveBranch(){
+
     }
 
     public void finalizeCommit(CommitObj obj, Map<String, List<FolderItem>> mapOfdif, String currentRepo) throws IOException {
@@ -297,7 +323,7 @@ public class MainEngine {
             }
 
             EngineUtils.overWriteFileContent(currentRepository+"\\.magit\\branches\\HEAD", branchName);
-            rootsha1= EngineUtils.getLastCommitSha(currentRepository);
+            rootsha1= EngineUtils.getLastCommitRoot(currentRepository);
             Map<String, List<FolderItem>> mapOfCommit= createLatestCommitMap(rootsha1,currentRepository);
             parseMapToWC(mapOfCommit,rootsha1,currentRepository+"\\.magit\\objects\\",currentRepository);
         } catch (IOException e) {
@@ -323,7 +349,6 @@ public class MainEngine {
 
 
     }
-
 
 
 }

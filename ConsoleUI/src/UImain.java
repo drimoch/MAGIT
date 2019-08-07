@@ -11,75 +11,95 @@ public class UImain {
 
     private final int m_numOfChoicesStartMenu = 3;
     private final int m_numOfChoicesMainMenu = 9;
-    private final String m_startMenuText;
-    private final String m_mainMenuText;
-    private String m_currentRepository="C:\\test";
+   //private final String m_startMenuText;
+    private String m_currentRepository = "";
     private static String m_currentUserName = "Administrator";
     public MainEngine engine;
 
-    public UImain() {
-        engine = new MainEngine();
-        m_startMenuText = String.format(
-                "What would you like to do?\n" +
-                        "1. Update user name\n" +
-                        "2. Load repository from XML\n" +
-                        "3. Exit ");
-        m_mainMenuText = String.format("3.  Switch repository \n" +
-                "1.  List Last commit content\n" +
-                "2.  Show working copy's status\n" +
-                "3.  Commit\n" +
-                "4.  List all branches\n" +
-                "5.  Create new branch\n" +
-                "6.  Delete branch\n" +
-                "7. Checkout\n" +
-                "8. Show active branch's commit history\n" +
-                "9. Exit");
-    }
 
 
-    public void run() throws IOException {
-       String userName;
-       System.out.println(String.format("Hello %s", engine.getUserName()));
-        Scanner scanner = new Scanner(System.in);
-       int userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
-       while (userChoice != m_numOfChoicesStartMenu) {
-           switch (userChoice) {
+
+        public void run () throws IOException {
+        boolean validCommand= false;
+       System.out.println(String.format("Hello %s", m_currentUserName));
+       Scanner scanner = new Scanner(System.in);
+            String menu = String.format(
+                    "[1]  SET USER NAME\n" +
+                            "[2]  LOAD REPOSITORY FROM XML\n" +
+                            "[3]  SWITCH REPOSITORY\n" +
+                            "[4]  LIST RECENT COMMIT\n" +
+                            "[5]  SHOW WC STATUS\n" +
+                            "[6]  COMMIT\n" +
+                            "[7]  LIST ALL BRANCHES\n" +
+                            "[8]  CREATE NEW BRANCH\n" +
+                            "[9]  DELETE BRANCH\n" +
+                            "[10] CHECKOUT\n" +
+                            "[11] DISPLAY ACTIVE BRANCH NAME\n" +
+                            "[12] EXIT\n");
+            System.out.println(menu);
+            int userInput = tryParseint(scanner.next());
+
+       while (userInput!=12) {
+
+           if(userInput < 0 ||userInput>12 )
+               System.out.println("Invalid input, please enter a number between 0 and 12");
+           else if(userInput>2 && userInput<12 ){
+              if( validateCommand())
+           switch (userInput) {
+
                case 1:
-                   System.out.println("Enter new user name: ");
-                   userName = scanner.nextLine();
-                   engine.setUserName(userName);
-                   userChoice = printMenu(m_startMenuText, m_numOfChoicesStartMenu);
-                   break;
+                   setUserName();
                case 2:
-                   //here we will write code that loads a repo
-                   //and at the end of it, the main menu will be displayed
-                   int mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
-                   while (mainMenuChoice >= 1 && mainMenuChoice <= m_numOfChoicesMainMenu) {
-                       switch (mainMenuChoice) {
-                           case 1:
-                               break;
-                           case 9:
-                               System.exit(0);
-                               break;
-                           default:
-                               if (mainMenuChoice != m_numOfChoicesMainMenu) {
-                                   mainMenuChoice = printMenu(m_mainMenuText, m_numOfChoicesMainMenu);
-                               }
-                       }
-                   }
-//
+                   //loadRepo();
                case 3:
-                   System.exit(0);
-                   break;
-            }
+                   setCurrentRepository();
+               case 4:
+                   displayHeadDetails();//check repo exists
+               case 5:
+                   showWCstatus();//check repo exists
+               case 6:
+                   commit();//check repo exists
+               case 7:
+                   listAllBranches();//check repo exists
+               case 8:
+                   createBranch();//check repo exists
+               case 9:
+                   deleteBranch();//check repo exists
+               case 10:
+                   checkOut();
+               case 11:
+                   displayActiveBranch();
+
+               default:
+                   System.out.println(menu);
+
+           } else System.out.println("Please specify a valid directory path (command number 3)");
+           }
+
+           userInput=tryParseint(scanner.next());
+
+       }
+
         }
 
 
-      initRepository();
-       //String e=scanner.nextLine();
-       //commit();
-       //createBranch();
-       checkOut();
+    public void setUserName(){
+            Scanner scanner= new Scanner(System.in);
+            System.out.println("Please enter your name");
+            m_currentUserName= scanner.nextLine();
+    }
+    public void setCurrentRepository(){
+            Scanner scan= new Scanner(System.in);
+            System.out.println("Please enter the full repository path");
+            String repo= scan.nextLine();
+           if(FileUtils.getFile(repo+"\\.magit").exists())
+            m_currentRepository=repo;
+           else
+               System.out.println("Directory does not exist");
+    }
+    public void displayActiveBranch(){
+
+
     }
 
     public void validateCommit(CommitObj commitObject, Map<String, List<FolderItem>> mapOfdif) throws IOException {
@@ -93,18 +113,19 @@ public class UImain {
             System.out.println("Give a short description of the new commit");
             commitObject.setCommitMessage(scanner.nextLine());
             commitObject.setUserName(engine.userName);
-            engine.finalizeCommit(commitObject,mapOfdif, this.m_currentRepository);
+            engine.finalizeCommit(commitObject, mapOfdif, this.m_currentRepository);
 
 
         } else System.out.println("Commit canceled, all changes discarded");
         return;
     }
+
     public void commit() {
         Map<String, List<FolderItem>> mapOfdif = new HashMap<>();
-        CommitObj commitObject=new CommitObj();
+        CommitObj commitObject = new CommitObj();
         try {
 
-            if (!engine.checkForChanges(mapOfdif, commitObject,this.m_currentRepository )) {
+            if (!engine.checkForChanges(mapOfdif, commitObject, this.m_currentRepository)) {
                 System.out.println("No changes detected, nothing to commit");
                 return;
             } else {
@@ -117,19 +138,32 @@ public class UImain {
             e.printStackTrace();
         }
     }
+    public void showCurrentCommitDetails(){
 
-    public void saveOpenChanges(){
+    }
+    public void showWCstatus() throws IOException {
+        Map<String, List<FolderItem>> mapOfdif = new HashMap<>();
+        CommitObj commitObject = new CommitObj();
+        System.out.println("The current repository path is:\n"+
+                m_currentRepository);
+        System.out.println("Current user:"+m_currentUserName+"\n");
+        engine.checkForChanges(mapOfdif,commitObject,m_currentRepository);
+        displayChanges(commitObject);
+
+
+    }
+    public void saveOpenChanges() {
 
         Map<String, List<FolderItem>> mapOfdif = new HashMap<>();
-        CommitObj commitObject=new CommitObj();
+        CommitObj commitObject = new CommitObj();
         try {
 
-            if (engine.checkForChanges(mapOfdif, commitObject, this.m_currentRepository )) {
+            if (engine.checkForChanges(mapOfdif, commitObject, this.m_currentRepository)) {
                 System.out.println("System has detected the following unsaved changes: ");
                 displayChanges(commitObject);
                 System.out.println("Would you like to save these changes before performing the branch operation?\n" +
                         "Unsaved changes will be deleted permenantly! \n" + "press (y)es to save, (n)o to continue without saving");
-                validateCommit(commitObject,mapOfdif);
+                validateCommit(commitObject, mapOfdif);
             }
 
         } catch (IOException e) {
@@ -138,61 +172,60 @@ public class UImain {
         System.out.println();
     }
 
-    public void checkOut(){
+    public void checkOut() {
 
-        Scanner scanner= new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Please specify the branch name you would like to switch to");
         String branchName = scanner.nextLine();
-        while(!FileUtils.getFile(this.m_currentRepository+"\\.magit\\branches\\"+ branchName).exists()&& !branchName.equals(27)) {
-        System.out.format("There is no branch by the name %s. Specify a different branch or press ESC to cancel operation",branchName);
-                 branchName = scanner.nextLine();
+        while (!FileUtils.getFile(this.m_currentRepository + "\\.magit\\branches\\" + branchName).exists() && !branchName.equals(27)) {
+            System.out.format("There is no branch by the name %s. Specify a different branch or press ESC to cancel operation", branchName);
+            branchName = scanner.nextLine();
         }
-        if (branchName.equals(27)){
-        System.out.println("Operation canceled");
+        if (branchName.equals(27)) {
+            System.out.println("Operation canceled");
             return;
-        }
-        else
-        saveOpenChanges();
+        } else
+            saveOpenChanges();
         engine.switchHeadBranch(branchName, m_currentRepository);
 
 
-
     }
+
     public String createBranch() throws IOException {
 
-        Scanner scanner= new Scanner(System.in);
-        String relativePath= this.m_currentRepository+"\\.magit\\branches\\";
-        File head= new File(relativePath+"HEAD");
-        File currentHead= new File(relativePath+FileUtils.readFileToString(head, StandardCharsets.UTF_8));
+        Scanner scanner = new Scanner(System.in);
+        String relativePath = this.m_currentRepository + "\\.magit\\branches\\";
+        File head = new File(relativePath + "HEAD");
+        File currentHead = new File(relativePath + FileUtils.readFileToString(head, StandardCharsets.UTF_8));
 
         System.out.println("Please enter the new branch name");
         String branchName = scanner.nextLine();
-        while(FileUtils.getFile(relativePath+branchName).exists()){
-                System.out.println("Branch exists, please enter a different name");
-                branchName= scanner.nextLine();
+        while (FileUtils.getFile(relativePath + branchName).exists()) {
+            System.out.println("Branch exists, please enter a different name");
+            branchName = scanner.nextLine();
         }
 
         EngineUtils.createBranchFile(m_currentRepository, branchName);
 
 
-    return branchName;
+        return branchName;
 
     }
 
 
     public void displayChanges(CommitObj obj) {
-        Map<String, String> deleted= obj.deleted,  added= obj.added, changed= obj.changed;
+        Map<String, String> deleted = obj.deleted, added = obj.added, changed = obj.changed;
         //TODO move logic to engine, send back just the message!
         String deletedMessage, addedMessage, changedMessage;
         deletedMessage = (deleted.isEmpty() ? "No files were deleted\n" : "Files deleted from directory:\n");
         changedMessage = (changed.isEmpty() ? "No files were changed\n" : "Files changed in directory:\n");
         addedMessage = (added.isEmpty() ? "No files were added\n" : "Files added to directory:\n");
-        List <String>d= deleted.values().stream().collect(Collectors.toList());
-        List <String>a= added.values().stream().collect(Collectors.toList());
-        List <String>c= changed.values().stream().collect(Collectors.toList());
+        List<String> d = deleted.values().stream().collect(Collectors.toList());
+        List<String> a = added.values().stream().collect(Collectors.toList());
+        List<String> c = changed.values().stream().collect(Collectors.toList());
 
 
-        System.out.println(deletedMessage + String.join("\n",d));
+        System.out.println(deletedMessage + String.join("\n", d));
         System.out.println(changedMessage + String.join("\n", c));
         System.out.println(addedMessage + String.join("\n", a));
 
@@ -211,53 +244,28 @@ public class UImain {
         } catch (Exception e) {
         }
     }
+    public int tryParseint(String num){
+            try{
+                int res=  Integer.parseInt(num);
+                return res;
+            }
+            catch(Exception NumberFormatException){
+                return -1;
+        }
+    }
+    public boolean validateCommand(){
+        return (!FileUtils.getFile(m_currentRepository+"\\.magit").exists());
+    }
+    public void displayHeadDetails() throws IOException {
 
-    public int printMenu(String i_menuText, int i_numOfOptions) {
-        String userChoice;
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println(i_menuText);
-        userChoice = scanner.nextLine();
-        return inputValidation(userChoice, i_numOfOptions);
-
-
-//       string numOfPlayersStr = Console.ReadLine();
-//       while (!menuInputValidation(numOfPlayersStr, "1", "2"))
-//       {
-//           Console.WriteLine("Invalid input. Please type 1 or 2:");
-//           numOfPlayersStr = Console.ReadLine();
-//       }
+            List <String> lst= engine.displayLastCommitDetails(m_currentRepository);
+            lst.forEach(i-> System.out.println(i+"\n"));
     }
 
+    public void listAllBranches() throws IOException {
+           List <String> res= engine.listAllBranches(m_currentRepository);
+             res.forEach(i-> System.out.println(i+"\n"));
 
-    private int inputValidation(String i_choice, int i_numOfChoices) {
-        Scanner scanner = new Scanner(System.in);
-        int userChoiceInt = 0;
-        String message = String.format("Invalid input, enter a number between 1-%d", i_numOfChoices);
-
-        while (userChoiceInt < 1 || userChoiceInt > i_numOfChoices) {
-            while (!tryParseInt(i_choice)) {
-                System.out.println(message);
-                i_choice = scanner.nextLine();
-            }
-            userChoiceInt = Integer.parseInt(i_choice);
-
-            if (userChoiceInt < 1 || userChoiceInt > i_numOfChoices) {
-                System.out.println(message);
-                i_choice = scanner.nextLine();
-            }
-        }
-        return userChoiceInt;
-
-    }
-
-    private boolean tryParseInt(String value) {
-        try {
-            Integer.parseInt(value);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
     }
 
 
