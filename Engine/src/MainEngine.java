@@ -24,10 +24,6 @@ import java.util.zip.ZipOutputStream;
 
 public class MainEngine {
     public static final String m_relativePathToObjDir = ".magit\\objects";
-    private static String m_currentRepository = "C:\\tester";
-    private static String m_currentUserName = "Administrator";
-    public String userName;
-
 
 
     public static String scanWorkingCopy(String currentRepository1,  Map<String, List<FolderItem>> foldersMap) throws IOException {
@@ -45,6 +41,7 @@ public class MainEngine {
 
     }
 
+
     //TODO: Handle exceptions in walk!
     public static void walk(File dir, Map<String, List<FolderItem>> foldersMap, List<FolderItem> parentFolder) throws IOException {
         String fileContent;
@@ -58,15 +55,18 @@ public class MainEngine {
                 attr = Files.readAttributes(path, BasicFileAttributes.class);
 
                 if (folderItem.isDirectory()) {
-                    subFiles = new LinkedList<FolderItem>();
-                    walk(folderItem, foldersMap, subFiles);
-                    Collections.sort(subFiles, FolderItem::compareTo);
-                    String key = calculateFileSHA1(subFiles);
-                    foldersMap.put(key, subFiles);
+                    if(folderItem.list().length==0)
+                        folderItem.delete();
+                    else {
+                        subFiles = new LinkedList<FolderItem>();
+                        walk(folderItem, foldersMap, subFiles);
+                        Collections.sort(subFiles, FolderItem::compareTo);
+                        String key = calculateFileSHA1(subFiles);
+                        foldersMap.put(key, subFiles);
 
-                    currentFolderItem = new FolderItem(key, folderItem.getName(), "user name", attr.lastModifiedTime().toString(), "folder");
-                    parentFolder.add(currentFolderItem);
-
+                        currentFolderItem = new FolderItem(key, folderItem.getName(), "user name", attr.lastModifiedTime().toString(), "folder");
+                        parentFolder.add(currentFolderItem);
+                    }
 
                 }
 
@@ -224,7 +224,7 @@ public class MainEngine {
 
     public List<String> displayLastCommitDetails(String currRepo) throws IOException {
         Map<String, List<FolderItem>> result;
-        String rootSha1=EngineUtils.getLastCommitRoot(m_currentRepository);
+        String rootSha1=EngineUtils.getLastCommitRoot(currRepo);
         result= createLatestCommitMap(rootSha1, currRepo);
         List<String> objects= new LinkedList<>();
         stringifyRepo(result,currRepo,rootSha1,objects);
@@ -270,7 +270,7 @@ public class MainEngine {
         for(File i: branches.listFiles())
         {
             if(!i.getPath().equals(currentRepo+ "\\.magit\\branches\\HEAD")) {
-                sha1= EngineUtils.getZippedFileLines(i.getPath()).get(0);
+                sha1= FileUtils.readFileToString(i);
                 branchesList.add(i.getName()+"\n"+
                         EngineUtils.listToString(EngineUtils.getZippedFileLines(currentRepo+"\\.magit\\objects\\"+sha1+".zip"),", "));
 

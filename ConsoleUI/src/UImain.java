@@ -1,5 +1,6 @@
 import org.apache.commons.io.FileUtils;
 
+import javax.sound.midi.Soundbank;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -11,76 +12,85 @@ public class UImain {
 
     private final int m_numOfChoicesStartMenu = 3;
     private final int m_numOfChoicesMainMenu = 9;
-   //private final String m_startMenuText;
+    //private final String m_startMenuText;
     private String m_currentRepository = "";
     private static String m_currentUserName = "Administrator";
     public MainEngine engine;
 
 
+    public void run() throws IOException {
+        engine= new MainEngine();
+        System.out.println(String.format("Hello %s", m_currentUserName));
+        Scanner scanner = new Scanner(System.in);
+        String menu = String.format(
+                "[1]  SET USER NAME\n" +
+                        "[2]  LOAD REPOSITORY FROM XML\n" +
+                        "[3]  SWITCH REPOSITORY\n" +
+                        "[4]  LIST RECENT COMMIT\n" +
+                        "[5]  SHOW WC STATUS\n" +
+                        "[6]  COMMIT\n" +
+                        "[7]  LIST ALL BRANCHES\n" +
+                        "[8]  CREATE NEW BRANCH\n" +
+                        "[9]  DELETE BRANCH\n" +
+                        "[10] CHECKOUT\n" +
+                        "[11] DISPLAY ACTIVE BRANCH NAME\n" +
+                        "[12] EXIT\n");
+        System.out.println(menu);
+        int userInput = tryParseint(scanner.next());
 
+        while (userInput != 12) {
 
-        public void run () throws IOException {
-        boolean validCommand= false;
-       System.out.println(String.format("Hello %s", m_currentUserName));
-       Scanner scanner = new Scanner(System.in);
-            String menu = String.format(
-                    "[1]  SET USER NAME\n" +
-                            "[2]  LOAD REPOSITORY FROM XML\n" +
-                            "[3]  SWITCH REPOSITORY\n" +
-                            "[4]  LIST RECENT COMMIT\n" +
-                            "[5]  SHOW WC STATUS\n" +
-                            "[6]  COMMIT\n" +
-                            "[7]  LIST ALL BRANCHES\n" +
-                            "[8]  CREATE NEW BRANCH\n" +
-                            "[9]  DELETE BRANCH\n" +
-                            "[10] CHECKOUT\n" +
-                            "[11] DISPLAY ACTIVE BRANCH NAME\n" +
-                            "[12] EXIT\n");
+            if (userInput < 0 || userInput > 12)
+                System.out.println("Invalid input, please enter a number between 0 and 12");
+            else if ((userInput > 3 && userInput < 12 && validateCommand()) || userInput <= 3) {
+                switch (userInput) {
+
+                    case 1:
+                        setUserName();
+                        break;
+                    case 2:
+                        //loadRepo();
+                        break;
+                    case 3:
+                        setCurrentRepository();
+                        break;
+                    case 4:
+                        displayHeadDetails();
+                        break;
+                    case 5:
+                        showWCstatus();
+                        break;
+                    case 6:
+                        commit();
+                        break;
+                    case 7:
+                        listAllBranches();
+                        break;
+                    case 8:
+                        createBranch();
+                        break;
+                    case 9:
+                        deleteBranch();
+                        break;
+                    case 10:
+                        checkOut();
+                        break;
+                    case 11:
+                        //displayActiveBranch();
+                        break;
+                }
+            }
+            else System.out.println("Please specify a valid directory path (command number 3)");
             System.out.println(menu);
-            int userInput = tryParseint(scanner.next());
 
-       while (userInput!=12) {
-
-           if(userInput < 0 ||userInput>12 )
-               System.out.println("Invalid input, please enter a number between 0 and 12");
-           else if(userInput>2 && userInput<12 ){
-              if( validateCommand())
-           switch (userInput) {
-
-               case 1:
-                   setUserName();
-               case 2:
-                   //loadRepo();
-               case 3:
-                   setCurrentRepository();
-               case 4:
-                   displayHeadDetails();//check repo exists
-               case 5:
-                   showWCstatus();//check repo exists
-               case 6:
-                   commit();//check repo exists
-               case 7:
-                   listAllBranches();//check repo exists
-               case 8:
-                   createBranch();//check repo exists
-               case 9:
-                   deleteBranch();//check repo exists
-               case 10:
-                   checkOut();
-               case 11:
-                   displayActiveBranch();
-
-               default:
-                   System.out.println(menu);
-
-           } else System.out.println("Please specify a valid directory path (command number 3)");
-           }
-
-           userInput=tryParseint(scanner.next());
-
-       }
+            userInput = tryParseint(scanner.next());
 
         }
+
+
+    }
+
+
 
 
     public void setUserName(){
@@ -96,8 +106,23 @@ public class UImain {
             m_currentRepository=repo;
            else
                System.out.println("Directory does not exist");
+           return;
     }
     public void displayActiveBranch(){
+
+
+    }
+    public void  deleteBranch() throws IOException {
+        Scanner scanner= new Scanner(System.in);
+        System.out.println("Plese enter a branch name you'd like to delete");
+        String branch= scanner.nextLine();
+        File branchFile= FileUtils.getFile(m_currentRepository+"\\branches\\"+branch);
+        String master=FileUtils.readFileToString(FileUtils.getFile(m_currentRepository+"\\branches\\HEAD"));
+        if (!branchFile.exists())
+            System.out.println("No such branch exists");
+        else if(master.equals(branch))
+            System.out.println("Head branch cannot be deleted");
+        else branchFile.delete();
 
 
     }
@@ -112,7 +137,7 @@ public class UImain {
         if (doNext.equalsIgnoreCase("y")) {
             System.out.println("Give a short description of the new commit");
             commitObject.setCommitMessage(scanner.nextLine());
-            commitObject.setUserName(engine.userName);
+            commitObject.setUserName(m_currentUserName);
             engine.finalizeCommit(commitObject, mapOfdif, this.m_currentRepository);
 
 
@@ -254,7 +279,7 @@ public class UImain {
         }
     }
     public boolean validateCommand(){
-        return (!FileUtils.getFile(m_currentRepository+"\\.magit").exists());
+        return (FileUtils.getFile(m_currentRepository+"\\.magit").exists());
     }
     public void displayHeadDetails() throws IOException {
 
