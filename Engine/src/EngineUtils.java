@@ -48,16 +48,17 @@ public class EngineUtils{
     }
 
     public static String getLastCommitRoot(String i_currentRepository) throws IOException {
-        String branchName, commitFileSha1;
+        String branchName;
         List<String> res;
-        File headFile = FileUtils.getFile(i_currentRepository + m_relativeBranchPath + "\\HEAD");
-        branchName = FileUtils.readFileToString(headFile, StandardCharsets.UTF_8);
-        File branchFile = FileUtils.getFile(i_currentRepository + m_relativeBranchPath + "\\" + branchName);
-        commitFileSha1 = FileUtils.readFileToString(branchFile, StandardCharsets.UTF_8);
+        String headFile = i_currentRepository + m_relativeBranchPath + "\\HEAD";
+        branchName = readFileToString(headFile);
+        String branchFile = i_currentRepository + m_relativeBranchPath + "\\" + branchName;
+        String lastCommitSha1 = readFileToString(branchFile);
 
-        if (commitFileSha1.equals(""))
+
+    if (lastCommitSha1.equals(""))
             return "";
-        res = getZippedFileLines(i_currentRepository + "\\.magit\\objects\\" + commitFileSha1 + ".zip");
+        res = getZippedFileLines(i_currentRepository + "\\.magit\\objects\\" +lastCommitSha1 + ".zip");
         String result= res.get(0);
         return result;
     }
@@ -125,7 +126,7 @@ public class EngineUtils{
         try {
             File f= new File(destPath);
             String content= String.join("",getZippedFileLines(zipPath));
-            FileUtils.writeStringToFile(f,content);
+            Files.write(Paths.get(destPath),content.getBytes());
 
 
         } catch (IOException e) {
@@ -135,12 +136,28 @@ public class EngineUtils{
     public static void createBranchFile(String destPath,String branchName) throws IOException {
 
         File newBranch= new File(destPath+ "\\.magit\\branches\\"+branchName);
-        String head=FileUtils.readFileToString(FileUtils.getFile(destPath+ "\\.magit\\branches\\HEAD"));
-        String mainBranch=  FileUtils.readFileToString(FileUtils.getFile(destPath+ "\\.magit\\branches\\" +head));
-        FileUtils.writeStringToFile(newBranch,mainBranch);
+        String head=readFileToString(destPath+ "\\.magit\\branches\\HEAD");
+        String mainBranch=  readFileToString(destPath+ "\\.magit\\branches\\" +head);
+        Files.write(Paths.get(newBranch.getPath()),mainBranch.getBytes());
 
     }
+     static String readFileToString(String filePath)
+    {
+        String content = "";
 
+        try
+        {
+            content = new String ( Files.readAllBytes( Paths.get(filePath) ) );
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return content;
+    }
 }
+
+
 
 

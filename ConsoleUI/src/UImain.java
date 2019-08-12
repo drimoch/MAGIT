@@ -33,7 +33,7 @@ public class UImain {
                         "[8]  CREATE NEW BRANCH\n" +
                         "[9]  DELETE BRANCH\n" +
                         "[10] CHECKOUT\n" +
-                        "[11] DISPLAY ACTIVE BRANCH NAME\n" +
+                        "[11] DISPLAY ACTIVE BRANCH\n" +
                         "[12] EXIT\n");
         System.out.println(menu);
         int userInput = tryParseint(scanner.next());
@@ -42,7 +42,7 @@ public class UImain {
 
             if (userInput < 0 || userInput > 12)
                 System.out.println("Invalid input, please enter a number between 0 and 12");
-            else if ((userInput > 3 && userInput < 12 && validateCommand()) || userInput <= 3) {
+            else if ((userInput > 3 && userInput < 13 && validateCommand()) || userInput <= 3) {
                 switch (userInput) {
 
                     case 1:
@@ -67,7 +67,7 @@ public class UImain {
                         listAllBranches();
                         break;
                     case 8:
-                        createBranch();
+                        createBranch();//implemented bonus
                         break;
                     case 9:
                         deleteBranch();
@@ -76,7 +76,13 @@ public class UImain {
                         checkOut();
                         break;
                     case 11:
-                        //displayActiveBranch();
+                        displayActiveBranch();
+                        break;
+                    case 12:
+                        resetHeadBranch();//bonus
+                        break;
+                    case 13:
+                        moveDir();//bonus
                         break;
                 }
             }
@@ -108,16 +114,17 @@ public class UImain {
                System.out.println("Directory does not exist");
            return;
     }
-    public void displayActiveBranch(){
-
+    public void displayActiveBranch() throws IOException {
+        List<String> res=  engine.displayLatestCommitHistory(m_currentRepository);
+        res.forEach(i-> System.out.println(String.format(i, " Name of creator:", " Date created", "Commit message" )));
 
     }
-    public void  deleteBranch() throws IOException {
+    public void  deleteBranch() {
         Scanner scanner= new Scanner(System.in);
         System.out.println("Plese enter a branch name you'd like to delete");
         String branch= scanner.nextLine();
         File branchFile= FileUtils.getFile(m_currentRepository+"\\branches\\"+branch);
-        String master=FileUtils.readFileToString(FileUtils.getFile(m_currentRepository+"\\branches\\HEAD"));
+        String master=EngineUtils.readFileToString(m_currentRepository+"\\.magit\\branches\\HEAD");
         if (!branchFile.exists())
             System.out.println("No such branch exists");
         else if(master.equals(branch))
@@ -199,21 +206,27 @@ public class UImain {
 
     public void checkOut() {
 
+        String branch= getBranchName();
+        if(!branch.equals(null)){
+            saveOpenChanges();
+            engine.switchHeadBranch(branch, m_currentRepository);
+        }
+
+
+    }
+    public String getBranchName(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please specify the branch name you would like to switch to");
         String branchName = scanner.nextLine();
-        while (!FileUtils.getFile(this.m_currentRepository + "\\.magit\\branches\\" + branchName).exists() && !branchName.equals(27)) {
+        while (!FileUtils.getFile(this.m_currentRepository + "\\.magit\\branches\\" + branchName).exists()) {
             System.out.format("There is no branch by the name %s. Specify a different branch or press ESC to cancel operation", branchName);
             branchName = scanner.nextLine();
         }
         if (branchName.equals(27)) {
             System.out.println("Operation canceled");
-            return;
+            return null;
         } else
-            saveOpenChanges();
-        engine.switchHeadBranch(branchName, m_currentRepository);
-
-
+        return branchName;
     }
 
     public String createBranch() throws IOException {
@@ -231,10 +244,35 @@ public class UImain {
         }
 
         EngineUtils.createBranchFile(m_currentRepository, branchName);
+        //BONUS
+        System.out.println("Would you like to switch to the new branch? Enter (y)es to switch, (n)o otherwise ");
+        String input=scanner.nextLine();
+        while(!input.equalsIgnoreCase("y")&& !input.equalsIgnoreCase("n")){
+            System.out.println("Please enter a valid input");
+            input=scanner.nextLine();
+        }
+        if (input.equalsIgnoreCase("y")) {
+            Map<String, List<FolderItem>> mapOfdif = new HashMap<>();
+            CommitObj commitObject = new CommitObj();
+            if (!engine.checkForChanges(mapOfdif, commitObject, this.m_currentRepository))//if there are no changes
+                engine.switchHeadBranch(branchName, m_currentRepository);
+            else
+                System.out.println("The system has detected unsaved changes. Please commit them before switching to a different branch");
+        }
 
 
         return branchName;
 
+    }
+    public void resetHeadBranch() throws IOException {
+        String branch= getBranchName();
+        if(!branch.equals(null)) {
+            saveOpenChanges();
+            String head=EngineUtils.readFileToString(m_currentRepository+"\\.magit\\branches\\HEAD");
+            String newSha1= EngineUtils.readFileToString(m_currentRepository+"\\.magit\\branches\\"+branch);
+            EngineUtils.overWriteFileContent(m_currentRepository+"\\.magit\\branches\\"+head,newSha1);
+            displayHeadDetails();
+        }
     }
 
 
@@ -289,8 +327,14 @@ public class UImain {
 
     public void listAllBranches() throws IOException {
            List <String> res= engine.listAllBranches(m_currentRepository);
-             res.forEach(i-> System.out.println(i+"\n"));
+             res.forEach(i-> System.out.println(String.format(i," Root directory SHA1:", " Parent branch SHA1:", " Created by:", "Date submitted:", "Commit message:")));
 
+    }
+    public void moveDir(){
+        String sourcePath, destPath;
+        Scanner scanner= new Scanner(System.in);
+        System.out.println(String.format("Where is the file/directory you wish to move located? Please provide a relative path to the current repository %s",m_currentRepository);
+        sourcePath= scanner.nextLine();
     }
 
 

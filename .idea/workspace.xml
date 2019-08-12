@@ -23,8 +23,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ConsoleUI/src/Program.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            <state relative-caret-position="153">
+              <caret line="9" column="20" selection-start-line="9" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -32,12 +32,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ConsoleUI/src/UImain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="101" column="8" lean-forward="true" selection-start-line="101" selection-start-column="8" selection-end-line="101" selection-end-column="8" />
+            <state relative-caret-position="279">
+              <caret line="336" column="39" selection-start-line="336" selection-start-column="39" selection-end-line="336" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9552#9553#0" expanded="true" />
-                <element signature="e#9636#9637#0" expanded="true" />
+                <element signature="e#12530#12531#0" expanded="true" />
+                <element signature="e#12613#12614#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -46,9 +46,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/CommitObj.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="20">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
+            <state relative-caret-position="83">
+              <caret line="30" column="31" lean-forward="true" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
               <folding>
+                <element signature="e#906#907#0" expanded="true" />
                 <element signature="e#947#948#0" expanded="true" />
                 <element signature="e#1086#1087#0" expanded="true" />
                 <element signature="e#1130#1131#0" expanded="true" />
@@ -60,20 +61,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/EngineUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="49" column="42" selection-start-line="49" selection-start-column="42" selection-end-line="49" selection-end-column="42" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4777">
-              <caret line="283" selection-start-line="283" selection-end-line="283" />
+            <state relative-caret-position="66">
+              <caret line="138" selection-start-line="138" selection-end-line="138" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -84,8 +73,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="jar://$USER_HOME$/Desktop/commons-io-2.6.jar!/org/apache/commons/io/FileUtils.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5109">
-              <caret line="1388" selection-start-line="1388" selection-end-line="1388" />
+            <state relative-caret-position="547">
+              <caret line="928" selection-start-line="928" selection-end-line="928" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="295">
+              <caret line="366" selection-start-line="366" selection-end-line="366" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#8931#8932#0" expanded="true" />
+                <element signature="e#9021#9022#0" expanded="true" />
+                <element signature="e#10603#10629#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -93,11 +97,15 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/FolderItem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-10">
-              <caret line="42" column="5" lean-forward="true" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
+            <state relative-caret-position="83">
+              <caret line="51" column="32" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
               <folding>
+                <element signature="e#759#760#0" expanded="true" />
+                <element signature="e#792#793#0" expanded="true" />
                 <element signature="e#823#824#0" expanded="true" />
                 <element signature="e#852#853#0" expanded="true" />
+                <element signature="e#881#882#0" expanded="true" />
+                <element signature="e#910#911#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,38 +123,40 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>fina</find>
-      <find>m_</find>
-      <find>branch</find>
-      <find>check</find>
-      <find>perfo</find>
-      <find>checko</find>
-      <find>validateco</find>
-      <find>init</find>
-      <find>walkx`</find>
-      <find>branc</find>
-      <find>swi</find>
-      <find>che</find>
-      <find>crea</find>
-      <find>getl</find>
-      <find>checkf</find>
       <find>compare</find>
-      <find>switch</find>
-      <find>create</find>
-      <find>createla</find>
-      <find>user</find>
-      <find>getla</find>
-      <find>parse</find>
-      <find>//</find>
-      <find>//</find>
-      <find>currentco</find>
       <find>commit</find>
-      <find>getZippedFileLines</find>
-      <find>listt</find>
-      <find>validate</find>
-      <find>commitob</find>
+      <find>switch</find>
+      <find>checko</find>
+      <find>save</find>
+      <find>parse</find>
+      <find>zipfil3</find>
+      <find>w</find>
+      <find>LISTALL</find>
+      <find>displaya</find>
+      <find>disp</find>
+      <find>finaliz</find>
+      <find>getla</find>
+      <find>get</find>
+      <find>getlas</find>
+      <find>displayac</find>
+      <find>11</find>
+      <find>display</find>
+      <find>displayActiveBranch</find>
+      <find>2,</find>
+      <find>listall</find>
+      <find>STRINGI</find>
+      <find>DISP</find>
+      <find>12</find>
+      <find>reset</find>
+      <find>crea</find>
+      <find>CHECK</find>
+      <find>getLastCommitRoot</find>
+      <find>displa</find>
     </findStrings>
     <replaceStrings>
       <replace />
+      <replace>EngineUtils.readFileToString</replace>
+      <replace>readFileToString</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -168,8 +178,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-84" />
-    <option name="y" value="489" />
+    <option name="x" value="376" />
+    <option name="y" value="102" />
     <option name="width" value="1440" />
     <option name="height" value="777" />
   </component>
@@ -268,7 +278,7 @@
       <option name="presentableId" value="Default" />
       <updated>1564393835624</updated>
       <workItem from="1564393841188" duration="35779000" />
-      <workItem from="1565111970458" duration="19289000" />
+      <workItem from="1565111970458" duration="77848000" />
     </task>
     <task id="LOCAL-00001" summary="nothing">
       <created>1564404136766</created>
@@ -389,11 +399,25 @@
       <option name="project" value="LOCAL" />
       <updated>1565078110753</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="finished all commands except delete branch and list branches">
+      <created>1565186588345</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1565186588346</updated>
+    </task>
+    <task id="LOCAL-00019" summary="finished all commands except delete branch and list branches">
+      <created>1565384991927</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1565384991927</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="183693000" />
+    <option name="totallyTimeSpent" value="242252000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -417,9 +441,9 @@
       <window_info id="Capture Tool" order="6" />
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.3285968" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3285968" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.329429" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49878544" weight="0.42095914" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49878544" visible="true" weight="0.22024867" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3285968" />
@@ -490,7 +514,8 @@
     <MESSAGE value="Added checkout" />
     <MESSAGE value="Fixed minor issues" />
     <MESSAGE value="Finished checkout" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished checkout" />
+    <MESSAGE value="finished all commands except delete branch and list branches" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished all commands except delete branch and list branches" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -500,12 +525,6 @@
           <line>387</line>
           <properties />
           <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Engine/src/MainEngine.java</url>
-          <line>153</line>
-          <properties />
-          <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Engine/src/EngineUtils.java</url>
@@ -527,57 +546,63 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>198</line>
+          <line>236</line>
           <properties />
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>201</line>
+          <line>239</line>
           <properties />
           <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>186</line>
-          <properties />
-          <option name="timeStamp" value="83" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>161</line>
+          <line>193</line>
           <properties />
           <option name="timeStamp" value="85" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Engine/src/MainEngine.java</url>
-          <line>252</line>
+          <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
+          <line>57</line>
           <properties />
-          <option name="timeStamp" value="96" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Engine/src/MainEngine.java</url>
-          <line>344</line>
-          <properties />
-          <option name="timeStamp" value="98" />
+          <option name="timeStamp" value="111" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>47</line>
+          <line>66</line>
           <properties />
-          <option name="timeStamp" value="99" />
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
+          <line>155</line>
+          <properties />
+          <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
+          <line>211</line>
+          <properties />
+          <option name="timeStamp" value="124" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Engine/src/MainEngine.java</url>
-          <line>228</line>
+          <line>295</line>
           <properties />
-          <option name="timeStamp" value="100" />
+          <option name="timeStamp" value="125" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Engine/src/MainEngine.java</url>
-          <line>226</line>
+          <line>350</line>
           <properties />
-          <option name="timeStamp" value="101" />
+          <option name="timeStamp" value="126" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Engine/src/MainEngine.java</url>
+          <line>132</line>
+          <properties />
+          <option name="timeStamp" value="131" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -598,11 +623,22 @@
         <watch expression="leaves" />
         <watch expression="mapOfLatestCommit" />
         <watch expression="fileLines" />
+        <watch expression="item" />
+        <watch expression="changed" />
+        <watch expression="mapOfCommit" />
+        <watch expression="((HashMap)dirMap).entrySet().toArray()[2]" custom="java.util.HashMap" />
+        <watch expression="((HashMap)dirMap).entrySet().toArray()[2]" language="JAVA" custom="java.util.HashMap" />
+        <watch expression="((HashMap.Node)((HashMap)dirMap).entrySet().toArray()[2]).getValue()" custom="java.util.HashMap.Node,java.util.HashMap" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>dirRootSHA1</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>dirMap.get(dirRootSHA1)</expression-string>
         <language-id>JAVA</language-id>
@@ -614,37 +650,32 @@
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>newDestPath</expression-string>
+        <expression-string>rootsha1</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>result</expression-string>
+        <expression-string>alteredCopy</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>rootDir</expression-string>
+        <expression-string>item</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>i</expression-string>
+        <expression-string>LastCommitMap</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>i.getName()</expression-string>
+        <expression-string>WCmap</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>i.getName().equals(currentRepository+&quot;\\.magit&quot;)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>this.m_currentRepository</expression-string>
+        <expression-string>FileUtils.getFile(repo+&quot;\\.magit&quot;).exists()</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -679,34 +710,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ConsoleUI/src/Program.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Engine/src/FolderItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10">
-          <caret line="42" column="5" lean-forward="true" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
-          <folding>
-            <element signature="e#823#824#0" expanded="true" />
-            <element signature="e#852#853#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Desktop/commons-io-2.6.jar!/org/apache/commons/io/FileUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5109">
-          <caret line="1388" selection-start-line="1388" selection-end-line="1388" />
+        <state relative-caret-position="153">
+          <caret line="9" column="20" selection-start-line="9" selection-end-line="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/CommitObj.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="83">
+          <caret line="30" column="31" lean-forward="true" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
           <folding>
+            <element signature="e#906#907#0" expanded="true" />
             <element signature="e#947#948#0" expanded="true" />
             <element signature="e#1086#1087#0" expanded="true" />
             <element signature="e#1130#1131#0" expanded="true" />
@@ -714,10 +728,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Engine/src/FolderItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="51" column="32" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
+          <folding>
+            <element signature="e#759#760#0" expanded="true" />
+            <element signature="e#792#793#0" expanded="true" />
+            <element signature="e#823#824#0" expanded="true" />
+            <element signature="e#852#853#0" expanded="true" />
+            <element signature="e#881#882#0" expanded="true" />
+            <element signature="e#910#911#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Desktop/commons-io-2.6.jar!/org/apache/commons/io/FileUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="547">
+          <caret line="928" selection-start-line="928" selection-end-line="928" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/EngineUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="49" column="42" selection-start-line="49" selection-start-column="42" selection-end-line="49" selection-end-column="42" />
+        <state relative-caret-position="66">
+          <caret line="138" selection-start-line="138" selection-end-line="138" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -726,22 +762,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4777">
-          <caret line="283" selection-start-line="283" selection-end-line="283" />
+        <state relative-caret-position="295">
+          <caret line="366" selection-start-line="366" selection-end-line="366" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#8931#8932#0" expanded="true" />
+            <element signature="e#9021#9022#0" expanded="true" />
+            <element signature="e#10603#10629#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ConsoleUI/src/UImain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="101" column="8" lean-forward="true" selection-start-line="101" selection-start-column="8" selection-end-line="101" selection-end-column="8" />
+        <state relative-caret-position="279">
+          <caret line="336" column="39" selection-start-line="336" selection-start-column="39" selection-end-line="336" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9552#9553#0" expanded="true" />
-            <element signature="e#9636#9637#0" expanded="true" />
+            <element signature="e#12530#12531#0" expanded="true" />
+            <element signature="e#12613#12614#0" expanded="true" />
           </folding>
         </state>
       </provider>
