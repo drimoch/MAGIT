@@ -333,7 +333,7 @@ public class UImain {
     public void moveDir(){
         String sourcePath, destPath;
         Scanner scanner= new Scanner(System.in);
-        System.out.println(String.format("Where is the file/directory you wish to move located? Please provide a relative path to the current repository %s",m_currentRepository);
+        System.out.println(String.format("Where is the file/directory you wish to move located? Please provide a relative path to the current repository %s",m_currentRepository));
         sourcePath= scanner.nextLine();
     }
 
