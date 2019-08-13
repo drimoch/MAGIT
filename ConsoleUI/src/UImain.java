@@ -1,6 +1,4 @@
 import org.apache.commons.io.FileUtils;
-
-import javax.sound.midi.Soundbank;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,9 +9,6 @@ import java.util.stream.Collectors;
 
 public class UImain {
 
-    private final int m_numOfChoicesStartMenu = 3;
-    private final int m_numOfChoicesMainMenu = 9;
-    //private final String m_startMenuText;
     private String m_currentRepository = "";
     private static String m_currentUserName = "Administrator";
     public MainEngine engine;
