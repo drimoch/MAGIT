@@ -43,7 +43,7 @@ public class CommitObj {
 
     @Override
     public String toString() {
-        return rootDirSha1 + "\n" + PreviousCommit +"\n" + m_submitterName + "\n" + dateCreated + "\n" + commitMessage+ "commit" ;
+        return rootDirSha1 + "\n" + PreviousCommit +"\n" + m_submitterName + "\n" + dateCreated + "\n" + commitMessage+ "\ncommit" ;
     }
 
 }

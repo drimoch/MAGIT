@@ -2,15 +2,22 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="MAGIT:jar" />
+      <artifact name="ConsoleUI:jar" />
+      <artifact name="Engine:jar" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4fe2640f-beef-4929-ba20-03a8c2752714" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Engine_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ConsoleUI/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/MAGIT_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/ConsoleUI_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/java.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ConsoleUI/ConsoleUI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleUI/ConsoleUI.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ConsoleUI/src/UImain.java" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleUI/src/UImain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/Engine.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Engine.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/src/CommitObj.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/CommitObj.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/src/EngineUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/EngineUtils.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,7 +34,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ConsoleUI/src/Program.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
+            <state relative-caret-position="153">
               <caret line="9" column="20" selection-start-line="9" selection-end-line="10" />
             </state>
           </provider>
@@ -36,8 +43,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ConsoleUI/src/UImain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="82">
-              <caret line="158" selection-start-line="158" selection-end-line="158" />
+            <state relative-caret-position="1547">
+              <caret line="91" selection-start-line="91" selection-end-line="91" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#12530#12531#0" expanded="true" />
@@ -50,8 +57,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/CommitObj.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="45" column="127" selection-start-line="45" selection-start-column="127" selection-end-line="45" selection-end-column="127" />
+            <state relative-caret-position="612">
+              <caret line="45" column="123" selection-start-line="45" selection-start-column="123" selection-end-line="45" selection-end-column="123" />
               <folding>
                 <element signature="e#906#907#0" expanded="true" />
                 <element signature="e#947#948#0" expanded="true" />
@@ -62,10 +69,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Engine/src/EngineUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
+            <state relative-caret-position="1194">
               <caret line="138" selection-start-line="138" selection-end-line="138" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -74,11 +81,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="82">
-              <caret line="132" selection-start-line="132" selection-end-line="132" />
+            <state relative-caret-position="150">
+              <caret line="136" column="59" selection-start-line="136" selection-start-column="59" selection-end-line="136" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#8931#8932#0" expanded="true" />
@@ -170,9 +177,9 @@
         <option value="$PROJECT_DIR$/src/Commit.java" />
         <option value="$PROJECT_DIR$/src/MainEngine.java" />
         <option value="$PROJECT_DIR$/Engine/src/FolderItem.java" />
+        <option value="$PROJECT_DIR$/Engine/src/EngineUtils.java" />
         <option value="$PROJECT_DIR$/Engine/src/MainEngine.java" />
         <option value="$PROJECT_DIR$/Engine/src/CommitObj.java" />
-        <option value="$PROJECT_DIR$/Engine/src/EngineUtils.java" />
         <option value="$PROJECT_DIR$/ConsoleUI/src/UImain.java" />
       </list>
     </option>
@@ -193,39 +200,7 @@
     <panes>
       <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="MAGIT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MAGIT" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MAGIT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MAGIT" type="462c0819:PsiDirectoryNode" />
-              <item name="ConsoleUI" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MAGIT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MAGIT" type="462c0819:PsiDirectoryNode" />
-              <item name="ConsoleUI" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MAGIT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MAGIT" type="462c0819:PsiDirectoryNode" />
-              <item name="Engine" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MAGIT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MAGIT" type="462c0819:PsiDirectoryNode" />
-              <item name="Engine" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -278,7 +253,7 @@
       <option name="presentableId" value="Default" />
       <updated>1564393835624</updated>
       <workItem from="1564393841188" duration="35779000" />
-      <workItem from="1565111970458" duration="91409000" />
+      <workItem from="1565111970458" duration="93365000" />
     </task>
     <task id="LOCAL-00001" summary="nothing">
       <created>1564404136766</created>
@@ -427,11 +402,18 @@
       <option name="project" value="LOCAL" />
       <updated>1565590279338</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Implemented all bonuses and fixed menu">
+      <created>1565685076096</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1565685076096</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="255813000" />
+    <option name="totallyTimeSpent" value="257769000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -444,6 +426,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1757085" />
       <window_info id="Designer" order="1" />
@@ -529,7 +512,8 @@
     <MESSAGE value="Finished checkout" />
     <MESSAGE value="finished all commands except delete branch and list branches" />
     <MESSAGE value="Implemented all bonuses" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented all bonuses" />
+    <MESSAGE value="Implemented all bonuses and fixed menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented all bonuses and fixed menu" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -560,43 +544,43 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>239</line>
+          <line>237</line>
           <properties />
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>242</line>
+          <line>240</line>
           <properties />
           <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>196</line>
+          <line>194</line>
           <properties />
           <option name="timeStamp" value="85" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>60</line>
+          <line>59</line>
           <properties />
           <option name="timeStamp" value="111" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>69</line>
+          <line>68</line>
           <properties />
           <option name="timeStamp" value="113" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>158</line>
+          <line>156</line>
           <properties />
           <option name="timeStamp" value="122" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>214</line>
+          <line>212</line>
           <properties />
           <option name="timeStamp" value="124" />
         </line-breakpoint>
@@ -620,13 +604,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>357</line>
+          <line>355</line>
           <properties />
           <option name="timeStamp" value="134" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ConsoleUI/src/UImain.java</url>
-          <line>356</line>
+          <line>354</line>
           <properties />
           <option name="timeStamp" value="135" />
         </line-breakpoint>
@@ -741,15 +725,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Engine/src/CommitObj.java">
+    <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="45" column="127" selection-start-line="45" selection-start-column="127" selection-end-line="45" selection-end-column="127" />
+        <state relative-caret-position="150">
+          <caret line="136" column="59" selection-start-line="136" selection-start-column="59" selection-end-line="136" selection-end-column="59" />
           <folding>
-            <element signature="e#906#907#0" expanded="true" />
-            <element signature="e#947#948#0" expanded="true" />
-            <element signature="e#1086#1087#0" expanded="true" />
-            <element signature="e#1130#1131#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#8931#8932#0" expanded="true" />
+            <element signature="e#9021#9022#0" expanded="true" />
+            <element signature="e#10603#10629#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -769,27 +753,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ConsoleUI/src/Program.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="9" column="20" selection-start-line="9" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Engine/src/EngineUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="138" selection-start-line="138" selection-end-line="138" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ConsoleUI/src/UImain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="158" selection-start-line="158" selection-end-line="158" />
+        <state relative-caret-position="1547">
+          <caret line="91" selection-start-line="91" selection-end-line="91" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#12530#12531#0" expanded="true" />
@@ -798,15 +765,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
+    <entry file="file://$PROJECT_DIR$/ConsoleUI/src/Program.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="132" selection-start-line="132" selection-end-line="132" />
+        <state relative-caret-position="153">
+          <caret line="9" column="20" selection-start-line="9" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Engine/src/CommitObj.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="45" column="123" selection-start-line="45" selection-start-column="123" selection-end-line="45" selection-end-column="123" />
+          <folding>
+            <element signature="e#906#907#0" expanded="true" />
+            <element signature="e#947#948#0" expanded="true" />
+            <element signature="e#1086#1087#0" expanded="true" />
+            <element signature="e#1130#1131#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Engine/src/EngineUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1194">
+          <caret line="138" selection-start-line="138" selection-end-line="138" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#8931#8932#0" expanded="true" />
-            <element signature="e#9021#9022#0" expanded="true" />
-            <element signature="e#10603#10629#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -817,7 +801,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>MAGIT:jar</last-edited>
+          <last-edited>Engine:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -875,6 +859,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
+          <last-edited>commons-codec-1</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

@@ -21,7 +21,6 @@ public class UImain {
 
     public void run() throws IOException {
         engine= new MainEngine();
-        System.out.println(String.format("Hello %s", m_currentUserName));
         Scanner scanner = new Scanner(System.in);
         String menu = String.format(
                 "[1]  SET USER NAME\n" +
@@ -90,7 +89,6 @@ public class UImain {
                 }
             }
             else System.out.println("Please specify a valid directory path (command number 3)");
-            System.out.println(menu);
 
             userInput = tryParseint(scanner.next());
 
