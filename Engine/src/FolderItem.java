@@ -1,4 +1,8 @@
+import jaxbClasses.MagitBlob;
+import jaxbClasses.MagitSingleFolder;
+import org.apache.commons.codec.digest.DigestUtils;
 
+import java.util.List;
 
 public class FolderItem implements Comparable {
     private String m_sha1;
@@ -23,6 +27,23 @@ public class FolderItem implements Comparable {
         m_type = i_itemDetails[4];
     }
 
+    public FolderItem(MagitBlob i_magitBlob) {
+        m_itemName = i_magitBlob.getName();
+        m_lastModified = i_magitBlob.getLastUpdateDate();
+        m_type = "file";
+        m_userName = i_magitBlob.getLastUpdater();
+        m_sha1 = DigestUtils.sha1Hex(i_magitBlob.getContent());
+    }
+
+    public FolderItem(MagitSingleFolder i_magitSingleFolder, List<FolderItem> i_folderItems) {
+        m_itemName = i_magitSingleFolder.getName();
+        m_lastModified = i_magitSingleFolder.getLastUpdateDate();
+        m_type = "folder";
+        m_userName = i_magitSingleFolder.getLastUpdater();
+        m_sha1 = MainEngine.calculateFileSHA1(i_folderItems);
+    }
+
+
     public String getItemName() {
         return m_itemName;
     }
@@ -30,7 +51,8 @@ public class FolderItem implements Comparable {
     public String getSha1() {
         return m_sha1;
     }
-    public String getType(){
+
+    public String getType() {
         return m_type;
     }
 
@@ -41,11 +63,12 @@ public class FolderItem implements Comparable {
 
         return m_itemName.compareTo(folderItemToCompare.getItemName());
     }
+
     @Override
     public String toString() {
-        return m_sha1+","+
-         m_itemName+","+
-         m_userName+","+ m_lastModified+","+m_type;
+        return m_sha1 + "," +
+                m_itemName + "," +
+                m_userName + "," + m_lastModified + "," + m_type;
 
     }
     public String getDetails(){

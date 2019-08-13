@@ -6,8 +6,7 @@ public class Program {
         UImain consoleUI = new UImain();
         try {
             consoleUI.run();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
 
         }
     }

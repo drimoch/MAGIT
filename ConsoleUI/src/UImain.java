@@ -4,6 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import Exceptions.RepositoryAlreadyExistException;
+import jaxbClasses.MagitRepository;
+
+import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -109,6 +114,8 @@ public class UImain {
            else
                System.out.println("Directory does not exist");
            return;
+
+
     }
     public void displayActiveBranch() throws IOException {
         List<String> res=  engine.displayLatestCommitHistory(m_currentRepository);
@@ -167,6 +174,24 @@ public class UImain {
         }
     }
     public void showCurrentCommitDetails(){
+
+            commitObject = engine.commit(mapOfdif);
+            if (commitObject == null) {
+                System.out.println("No changes detected, nothing to commit");
+                return;
+            } else {
+                displayChanges(commitObject.deleted, commitObject.added, commitObject.changed);
+                System.out.println("Commit changes? press (y)es to commit (n)o to cancel operation ");
+                doNext = scanner.nextLine();
+                while (!doNext.equalsIgnoreCase("y") && !doNext.equalsIgnoreCase("n")) {
+                    System.out.println("No such command, please enter y or n");
+                    doNext = scanner.nextLine();
+                }
+                if (doNext.equalsIgnoreCase("y")) {
+                    System.out.println("Give a short description of the current commit");
+                    commitObject.setCommitMessage(scanner.nextLine());
+                    commitObject.setUserName(engine.userName);
+                    engine.finalizeCommit(commitObject, mapOfdif);
 
     }
     public void showWCstatus() throws IOException {
@@ -273,8 +298,21 @@ public class UImain {
         }
     }
 
+    public void loadXML() {
+        try {
+            MagitRepository m = JAXBHandler.loadXML("C:\\Users\\David\\Downloads\\ex1-small.xml");
 
-    public void displayChanges(CommitObj obj) {
+            engine.loadRepoFromXML(m);
+        } catch (NoSuchFileException e) {
+            // here we'll notify the user that location tag in XML does not exist
+        } catch (RepositoryAlreadyExistException e) {
+            //here we'll tell the user there is already a repository in that location, what does he wants to do?
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+public void displayChanges(CommitObj obj) {
         Map<String, String> deleted = obj.deleted, added = obj.added, changed = obj.changed;
         //TODO move logic to engine, send back just the message!
         String deletedMessage, addedMessage, changedMessage;
