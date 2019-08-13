@@ -71,6 +71,9 @@ public class FolderItem implements Comparable {
                 m_userName + "," + m_lastModified + "," + m_type;
 
     }
+    public String getDetails(){
+        return "Sha1:"+ m_sha1+" Last modifier:"+ m_userName+ " Date last modified:" + m_lastModified+ " Type:"+m_type;
+    }
 
 
 }
