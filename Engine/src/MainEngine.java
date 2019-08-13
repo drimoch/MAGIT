@@ -6,16 +6,16 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Equator;
 import org.apache.commons.io.FileUtils;
-
+import org.apache.commons.collections4.CollectionUtils;
+import java.util.stream.Collectors;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 public class MainEngine {
     public static final String m_relativePathToObjDir = ".magit\\objects";
@@ -27,13 +27,15 @@ public class MainEngine {
     private Map<String, MagitBlob> m_repoBlobs;
     private Map<String, MagitSingleFolder> m_repoFolders;
 
-    public static String scanWorkingCopy(String currentRepository1, Map<String, List<FolderItem>> foldersMap) throws IOException {
+
+      public static String scanWorkingCopy(String currentRepository1,  Map<String, List<FolderItem>> foldersMap) throws IOException {
 
         //compare WC to the master commit
         //create a temp file
         Path dirPath = Paths.get(currentRepository1);
         File dir = dirPath.toFile();
         List<FolderItem> filesList = new LinkedList<>();
+        //foldersMap = new HashMap<String, List<FolderItem>>();
         walk(dir, foldersMap, filesList);
         String rootSha1 = calculateFileSHA1(filesList);
         foldersMap.put(rootSha1, filesList);
@@ -41,6 +43,46 @@ public class MainEngine {
 
     }
 
+  public static void walk(File dir, Map<String, List<FolderItem>> foldersMap, List<FolderItem> parentFolder) throws IOException {
+        String fileContent;
+        Path path;
+        BasicFileAttributes attr;
+        List<FolderItem> subFiles;
+        FolderItem currentFolderItem;
+        for (final File folderItem : dir.listFiles()) {
+            if (!folderItem.getName().endsWith(".magit")) {
+                path = Paths.get(folderItem.getPath());
+                attr = Files.readAttributes(path, BasicFileAttributes.class);
+
+                if (folderItem.isDirectory()) {
+                    if(folderItem.list().length==0)
+                        folderItem.delete();
+                    else {
+                        subFiles = new LinkedList<FolderItem>();
+                        walk(folderItem, foldersMap, subFiles);
+                        Collections.sort(subFiles, FolderItem::compareTo);
+                        String key = calculateFileSHA1(subFiles);
+                        foldersMap.put(key, subFiles);
+
+                        currentFolderItem = new FolderItem(key, folderItem.getName(), "user name", attr.lastModifiedTime().toString(), "folder");
+                        parentFolder.add(currentFolderItem);
+                    }
+
+                }
+
+                if (folderItem.isFile()) {
+                    fileContent = EngineUtils.readFileToString(folderItem.getPath());
+                    currentFolderItem = new FolderItem(DigestUtils.sha1Hex(fileContent), folderItem.getName(), "user name", attr.lastModifiedTime().toString(), "file");
+                    parentFolder.add(currentFolderItem);
+
+
+                }
+
+            }
+        }
+        return;
+
+    }
 
     public static String calculateFileSHA1(List<FolderItem> folderContent) {
         String res = "";
@@ -68,7 +110,7 @@ public class MainEngine {
                 File headFile = new File(branchesPath + "\\HEAD");
                 File masterFile = new File(branchesPath + "\\master");
                 FileUtils.touch(masterFile);
-                FileUtils.writeStringToFile(headFile, headContent);
+                Files.write(Paths.get(headFile.getPath()), headContent.getBytes());
 
                 System.out.println("Create " + rootDirPath + " success. ");
             } else {
@@ -80,62 +122,42 @@ public class MainEngine {
 
     //COMMIT RELATED FUNCTIONS
 
-    public static String getUserName() {
-        return m_currentUserName;
-    }
 
-    public static void setUserName(String i_userName) {
-        m_currentUserName = i_userName;
-    }
+public boolean checkForChanges(Map<String, List<FolderItem>> mapOfdif, CommitObj commit, String currentRepo) throws IOException {
+        Map<String, List<FolderItem>> mapOfLatestCommit= new HashMap<>();
+        Map<String, List<FolderItem>> mapOfWC=new HashMap<>();
+        String latestCommitRoot;
+        String latestCommitSha1 =EngineUtils.readFileToString( currentRepo+"\\.magit\\branches\\"+  EngineUtils.readFileToString(currentRepo + "\\.magit\\branches\\HEAD"));
 
-    public static String getCurrentRepository() {
-        return m_currentRepository;
-    }
+        latestCommitRoot= EngineUtils.getLastCommitRoot(currentRepo);
+        String WCSha1= scanWorkingCopy(currentRepo, mapOfWC);
+        if(!WCSha1.equals(latestCommitRoot)){
+            commit.setCommitSHA1(WCSha1);
+                commit.setPreviousCommit(latestCommitSha1);
+                if(!latestCommitSha1.equals(""))
+                mapOfLatestCommit= createLatestCommitMap(latestCommitRoot,currentRepo);
+                compareWCtoCommit(mapOfWC, mapOfLatestCommit,WCSha1,latestCommitRoot,currentRepo,commit.deleted,commit.added,commit.changed);
 
-    public static void setCurrentRepository(String i_currentRepository) {
-        m_currentRepository = i_currentRepository;
-    }
-
-    //TODO: Handle exceptions in walk!
-    public static void walk(File dir, Map<String, List<FolderItem>> foldersMap, List<FolderItem> parentFolder) throws IOException {
-        String fileContent;
-        Path path;
-        BasicFileAttributes attr;
-        List<FolderItem> subFiles;
-        FolderItem currentFolderItem;
-        for (final File folderItem : dir.listFiles()) {
-            if (!folderItem.getName().endsWith(".magit")) {
-                path = Paths.get(folderItem.getPath());
-                attr = Files.readAttributes(path, BasicFileAttributes.class);
-
-                if (folderItem.isDirectory()) {
-                    subFiles = new LinkedList<FolderItem>();
-                    walk(folderItem, foldersMap, subFiles);
-                    Collections.sort(subFiles, FolderItem::compareTo);
-                    String key = calculateFileSHA1(subFiles);
-                    foldersMap.put(key, subFiles);
-                    currentFolderItem = new FolderItem(key, folderItem.getName(), "user name", attr.lastModifiedTime().toString(), "folder");
-                    parentFolder.add(currentFolderItem);
+            for (String key : mapOfWC.keySet()) {
+                if (!mapOfLatestCommit.containsKey(key)) {
+                    mapOfdif.put(key, mapOfWC.get(key));
                 }
-
-                if (folderItem.isFile()) {
-                    fileContent = FileUtils.readFileToString(folderItem, StandardCharsets.UTF_8);
-                    currentFolderItem = new FolderItem(DigestUtils.sha1Hex(fileContent), folderItem.getName(), "user name", attr.lastModifiedTime().toString(), "file");
-                    parentFolder.add(currentFolderItem);
-                }
-
             }
+            return true;
         }
-        return;
+        else
+        return false;
 
     }
 
-    public static void compareWCtoCommit(Map<String, List<FolderItem>> WCmap,
+    
+
+   public static void compareWCtoCommit(Map<String, List<FolderItem>> WCmap,
                                          Map<String, List<FolderItem>> LastCommitMap,
                                          String currentWCKey,
                                          String currentCommitKey,
                                          String path,
-                                         Map<String, String> deletedList, Map<String, String> addedList, Map<String, String> changedList) {
+                                         Map<String,String> deletedList, Map<String,String> addedList, Map<String,String> changedList) {
         FolderItemEquator itemsEquator = new FolderItemEquator();
         if (currentCommitKey.equals(currentWCKey))
             return;
@@ -144,36 +166,38 @@ public class MainEngine {
             List<FolderItem> currentWCFolder = WCmap.get(currentWCKey);
 
             //deleted files= commitmap-wcmap
-            if (!LastCommitMap.isEmpty()) {
+            if(!LastCommitMap.isEmpty()) {
                 List<FolderItem> deleted = (List<FolderItem>) CollectionUtils.removeAll(currentCommitFolder, currentWCFolder, itemsEquator);
                 deleted.stream().
                         forEach(o -> mapLeavesOfPathTree(LastCommitMap, o, path, deletedList));
             }
             //added files = wcmap-commitmap
-            if (!WCmap.isEmpty()) {
+            if(!WCmap.isEmpty()) {
                 List<FolderItem> added = (List<FolderItem>) CollectionUtils.removeAll(WCmap.get(currentWCKey), LastCommitMap.get(currentCommitKey), itemsEquator);
                 added.stream().
                         forEach(o -> mapLeavesOfPathTree(WCmap, o, path, addedList));
             }
-            //we remain with the common files. go through them
-            if (!LastCommitMap.isEmpty()) {
-                List<FolderItem> changed = (List<FolderItem>) CollectionUtils.retainAll(WCmap.get(currentWCKey), LastCommitMap.get(currentCommitKey), itemsEquator);
+            //we remain with the common files. go through them and compare
+            if(!LastCommitMap.isEmpty()) {
+                List<FolderItem> changed = (List<FolderItem>) CollectionUtils.retainAll(WCmap.get(currentWCKey),LastCommitMap.get(currentCommitKey), itemsEquator);
                 for (FolderItem item : changed) {
+                    Optional<FolderItem> alteredCopy = LastCommitMap.get(currentCommitKey).stream().filter(i -> i.getItemName().equals(item.getItemName()) && i.getType().equals(item.getType())).findFirst();
                     if (item.getType().equals("folder")) {
-                        Optional<FolderItem> alteredCopy = WCmap.get(currentWCKey).stream().filter(i -> i.getItemName().equals(item.getItemName()) && i.getType().equals("folder")).findFirst();
                         compareWCtoCommit(WCmap,
                                 LastCommitMap,
-                                alteredCopy.get().getSha1(),
                                 item.getSha1(),
+                                alteredCopy.get().getSha1(),
                                 path + "\\" + item.getItemName(),
                                 deletedList, addedList, changedList);
 
-                    } else changedList.put(item.getSha1(), path + "\\" + item.getItemName());
+                    } else if(!alteredCopy.get().getSha1().equals(item.getSha1()))
+                        changedList.put(item.getSha1(), path + "\\" + item.getItemName());
                 }
             }
         }
 
     }
+
 
     public static void mapLeavesOfPathTree(Map<String, List<FolderItem>> mapOfPath, FolderItem item, String path, Map<String, String> leaves) {
         if (item.getType().equals("file"))
@@ -205,7 +229,8 @@ public class MainEngine {
             List<FolderItem> rootItems = new LinkedList<>();
             MagitSingleCommit firstCommit = firstCommitList.get(0);
             m_repoCommitObjects=new HashMap<>();
-            magitCommitToMap(firstCommitMap, rootItems, firstCommit);
+            
+          (firstCommitMap, rootItems, firstCommit);
 
             //loop on all commit->produce map->send map to mapToObjects function->create commitObj and put it in the m_repoCommitObjects
          //   i_repoToParse.getMagitCommits().getMagitSingleCommit().stream().filter(magitSingleCommit -> magitSingleCommit.getPrecedingCommits().getPrecedingCommit().)
@@ -266,6 +291,27 @@ System.out.println();
 
     }
 
+ public List<String> displayLastCommitDetails(String currRepo) throws IOException {
+        Map<String, List<FolderItem>> result;
+        String rootSha1=EngineUtils.getLastCommitRoot(currRepo);
+        result= createLatestCommitMap(rootSha1, currRepo);
+        List<String> objects= new LinkedList<>();
+        stringifyRepo(result,currRepo,rootSha1,objects);
+        return objects;
+
+
+    }
+     public void stringifyRepo( Map<String, List<FolderItem>> map, String repo, String root, List<String> objects){
+        List <FolderItem> lst= map.get(root);
+        for(FolderItem i: lst){
+            objects.add(i.getDetails()+"\n " +
+                    "path:"+ repo+"\\"+i.getItemName());
+            if(i.getType().equals("folder"))
+                stringifyRepo(map, repo+"\\"+i.getItemName(), i.getSha1(),objects);
+        }
+    }
+
+  
     private boolean isRootDirValid(String i_rootFolderID) throws RepoXmlNotValidException {
         MagitSingleFolder folderToCheck = m_repoFolders.get(i_rootFolderID);
         if (folderToCheck == null) {
@@ -277,63 +323,61 @@ System.out.println();
         return true;
     }
 
-    public CommitObj commit(Map<String, List<FolderItem>> mapOfdif) throws IOException {
-        CommitObj commit = null;
-        Map<String, List<FolderItem>> mapOfLatestCommit = new HashMap<>();
-        Map<String, List<FolderItem>> mapOfWC = new HashMap<>();
-        String latestCommitSha1;
-
-        latestCommitSha1 = EngineUtils.getLastCommitSha(m_currentRepository);
-        String WCSha1 = scanWorkingCopy(m_currentRepository, mapOfWC);
-        if (!WCSha1.equals(latestCommitSha1)) {
-            commit = new CommitObj(latestCommitSha1, WCSha1);
-            if (!latestCommitSha1.equals(""))
-                mapOfLatestCommit = createLatestCommitMap(latestCommitSha1);
-            compareWCtoCommit(mapOfWC, mapOfLatestCommit, WCSha1, latestCommitSha1, m_currentRepository, commit.deleted, commit.added, commit.changed);
-
-        }
-        for (String key : mapOfWC.keySet()) {
-            if (!mapOfLatestCommit.containsKey(key)) {
-                mapOfdif.put(key, mapOfWC.get(key));
-            }
-        }
-        return commit;
-
-
-    }
+  
 
     public void initRepository(String rootDirPath, String repoName) throws IOException {
         initRepo(rootDirPath, repoName);
     }
 
-    public Map<String, List<FolderItem>> createLatestCommitMap(String i_rootDirSha1) throws IOException {
+public Map<String, List<FolderItem>> createLatestCommitMap(String i_rootDirSha, String currentRepo) throws IOException {
         Map<String, List<FolderItem>> result = new HashMap<String, List<FolderItem>>();
-        createCommitMapRec(i_rootDirSha1, result);
+        createCommitMapRec(i_rootDirSha, result, currentRepo);
         return result;
     }
 
-    private void createCommitMapRec(String i_rootDirSha, Map<String, List<FolderItem>> i_commitMap) throws IOException {
-        List<FolderItem> rootDir = EngineUtils.parseToFolderList(m_currentRepository + "\\" + m_relativePathToObjDir + "\\" + i_rootDirSha + ".zip");
+    private void createCommitMapRec(String i_rootDirSha, Map<String, List<FolderItem>> i_commitMap, String currentRepo) throws IOException {
+        List<FolderItem> rootDir = EngineUtils.parseToFolderList(currentRepo+ "\\" + m_relativePathToObjDir + "\\" + i_rootDirSha + ".zip");
         i_commitMap.put(i_rootDirSha, rootDir);
         for (FolderItem item : rootDir) {
             if (item.getType().equals("folder")) {
-                createCommitMapRec(item.getSha1(), i_commitMap);
+                createCommitMapRec(item.getSha1(), i_commitMap, currentRepo);
             }
         }
     }
 
-    public void finalizeCommit(CommitObj obj, Map<String, List<FolderItem>> mapOfdif) throws IOException {
-        //zip files and create the commit file. change head branch pointer)
-        String targetPath = m_currentRepository + "\\.magit\\objects\\";
-        obj.changed.forEach((key, string) -> EngineUtils.ZipFile(key, string, targetPath));
-        obj.added.forEach((key, string) -> EngineUtils.ZipFile(key, string, targetPath));
+    public List<String> listAllBranches(String currentRepo) throws IOException {
+        File branches= FileUtils.getFile(currentRepo+ "\\.magit\\branches");
+        String sha1;
+        List <String> branchesList= new LinkedList<>();
+        for(File i: branches.listFiles())
+        {
+            if(!i.getPath().equals(currentRepo+ "\\.magit\\branches\\HEAD")) {
+                sha1= EngineUtils.readFileToString(i.getPath());
+                branchesList.add(i.getName()+"\n %s"+
+                        EngineUtils.listToString(EngineUtils.getZippedFileLines(currentRepo+"\\.magit\\objects\\"+sha1+".zip")," %s"));
+
+            }
+
+        }
+        return branchesList;
+    }
+
+    public void mapActiveBranch(){
+
+    }
+
+   public void finalizeCommit(CommitObj obj, Map<String, List<FolderItem>> mapOfdif, String currentRepo) throws IOException {
+        String targetPath=currentRepo+"\\.magit\\objects\\";
+        obj.changed.forEach((key,string)->EngineUtils.ZipFile(key,string,targetPath));
+        obj.added.forEach((key,string)->EngineUtils.ZipFile(key,string,targetPath));
         foldersToFile(mapOfdif, targetPath);
 
-        String newCommitContent = obj.toString();
-        String newCommitSha1 = DigestUtils.sha1Hex(newCommitContent);
+        String newCommitContent=obj.toString();
+        String newCommitSha1=DigestUtils.sha1Hex(newCommitContent);
 
-        EngineUtils.StringToZipFile(newCommitContent, targetPath, newCommitSha1);
-        EngineUtils.overWriteFileContent(m_currentRepository + "\\.magit\\branches\\master", newCommitSha1);
+        EngineUtils.StringToZipFile(newCommitContent, targetPath, newCommitSha1 );
+        String currentHead=EngineUtils.readFileToString(currentRepo+"\\.magit\\branches\\HEAD");
+        EngineUtils.overWriteFileContent(currentRepo+"\\.magit\\branches\\"+currentHead, newCommitSha1);
     }
 
     public void foldersToFile(Map<String, List<FolderItem>> mapOfdif, String targetPath) {
@@ -348,8 +392,57 @@ System.out.println();
         });
 
     }
-    //checkout related functions:
-    // map the commit and parse it into WC
+ public List<String> displayLatestCommitHistory(String currRepo) throws IOException {
+        String curCommit=EngineUtils.readFileToString( currRepo+"\\.magit\\branches\\"+  EngineUtils.readFileToString(currRepo + "\\.magit\\branches\\HEAD"));
+        List <String> res= new LinkedList<>();
+        List <String> commitContent;
+        while(!curCommit.equals("")){
+            commitContent=EngineUtils.getZippedFileLines(currRepo+"\\.magit\\objects\\"+ curCommit+".zip");
+            res.add("Commit SHA1:" + curCommit+ "%s "+ EngineUtils.listToString(commitContent.subList(2,5)," %s "));
+            curCommit=commitContent.get(1);
+        }
+        return res;
+
+    }
+    public void switchHeadBranch(String branchName, String currentRepository){
+
+        String branchFile= currentRepository+"\\.magit\\branches\\"+ branchName;
+
+        try {
+            String skip=currentRepository+"\\.magit";
+            String Commitsha1= EngineUtils.readFileToString(branchFile), rootsha1;
+            for(File i: FileUtils.getFile(currentRepository).listFiles()){
+                if(!i.getPath().contains(skip))
+                    FileUtils.deleteQuietly(i);
+            }
+
+            EngineUtils.overWriteFileContent(currentRepository+"\\.magit\\branches\\HEAD", branchName);
+            rootsha1= EngineUtils.getLastCommitRoot(currentRepository);
+            Map<String, List<FolderItem>> mapOfCommit= createLatestCommitMap(rootsha1,currentRepository);
+            parseMapToWC(mapOfCommit,rootsha1,currentRepository+"\\.magit\\objects\\",currentRepository);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    public void parseMapToWC(Map <String,List< FolderItem>> dirMap, String dirRootSHA1, String sourcePath, String destPath){
+        String newDestPath;
+        List <FolderItem> items= dirMap.get(dirRootSHA1);
+       for( FolderItem i: items){
+           if (i.getType().equals("file")){
+
+                EngineUtils.extractFile(sourcePath+i.getSha1()+".zip", i.getSha1(),destPath+"\\"+i.getItemName());
+           }
+           else{
+               File folder = new File(destPath+"\\"+i.getItemName());
+               folder.mkdir();
+               parseMapToWC(dirMap, i.getSha1(),sourcePath, destPath+"\\"+i.getItemName());
+           }
+       }
+
+
+    }
 
     public static class FolderItemEquator implements Equator<FolderItem> {
         @Override

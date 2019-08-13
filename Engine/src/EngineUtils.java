@@ -1,3 +1,4 @@
+
 import Exceptions.FolderIsNotEmptyException;
 import Exceptions.RepoXmlNotValidException;
 import Exceptions.RepositoryAlreadyExistException;
@@ -6,19 +7,18 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
+import java.util.*;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-public class EngineUtils {
+public class EngineUtils{
     private static String m_relativeBranchPath = "\\.magit\\branches";
 
     public static List<FolderItem> parseToFolderList(String i_filePath) throws IOException {
@@ -52,6 +52,21 @@ public class EngineUtils {
         return fileLines;
     }
 
+  public static String getLastCommitRoot(String i_currentRepository) throws IOException {
+        String branchName;
+        List<String> res;
+        String headFile = i_currentRepository + m_relativeBranchPath + "\\HEAD";
+        branchName = readFileToString(headFile);
+        String branchFile = i_currentRepository + m_relativeBranchPath + "\\" + branchName;
+        String lastCommitSha1 = readFileToString(branchFile);
+
+
+    if (lastCommitSha1.equals(""))
+            return "";
+        res = getZippedFileLines(i_currentRepository + "\\.magit\\objects\\" +lastCommitSha1 + ".zip");
+        String result= res.get(0);
+        return result;
+    }
     public static String getLastCommitSha(String i_currentRepository) throws IOException {
         String branchName, commitFileSha1;
         List<String> res = new LinkedList<>();
@@ -80,10 +95,10 @@ public class EngineUtils {
         out.close();
     }
 
-    public static void overWriteFileContent(String path, String CommitSHA1) {
+   public static void overWriteFileContent(String path, String Content) {
         try {
             FileWriter fw = new FileWriter(path, false);
-            fw.write(CommitSHA1);
+            fw.write(Content);
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -124,6 +139,19 @@ public class EngineUtils {
         return temp;
     }
 
+
+  
+    public static void extractFile(String zipPath, String entry, String destPath)  {
+        try {
+            File f= new File(destPath);
+            String content= String.join("",getZippedFileLines(zipPath));
+            Files.write(Paths.get(destPath),content.getBytes());
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void loadBranchesFromXML(MagitRepository i_repo) {
 
         Stream<MagitSingleFolder> magitFoldersStream = i_repo.getMagitFolders().getMagitSingleFolder().stream();
@@ -131,6 +159,40 @@ public class EngineUtils {
 //TODO:follow logic of createLatestCommitMap - your current mission - create object files for all repo objects
         i_repo.getMagitBranches().getHead();//in the end
     }
+    public static void createBranchFile(String destPath,String branchName) throws IOException {
+
+        File newBranch= new File(destPath+ "\\.magit\\branches\\"+branchName);
+        String head=readFileToString(destPath+ "\\.magit\\branches\\HEAD");
+        String mainBranch=  readFileToString(destPath+ "\\.magit\\branches\\" +head);
+        Files.write(Paths.get(newBranch.getPath()),mainBranch.getBytes());
+
+    }
+     static String readFileToString(String filePath)
+    {
+        String content = "";
+
+        try
+        {
+            content = new String ( Files.readAllBytes( Paths.get(filePath) ) );
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return content;
+    }
+    public static boolean isACommit(String sha1, String rootPath){
+        try {
+           return(getZippedFileLines(rootPath+ "\\.magit\\objects\\"+ sha1 +".zip").get(5).equalsIgnoreCase("commit"));
+        } catch (IOException e) {
+            return false;
+        }
+
+    }
+}
+
+
 
     public static boolean isRepoLocationValid(File i_repoLocation) throws IOException, RepositoryAlreadyExistException, FolderIsNotEmptyException, RepoXmlNotValidException {
         if (!i_repoLocation.isDirectory()) {

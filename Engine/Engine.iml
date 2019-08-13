@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$USER_HOME$/Downloads/commons-codec-1.13/commons-codec-1.13.jar!/" />
@@ -16,7 +16,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$USER_HOME$/Downloads/commons-io-2.6/commons-io-2.6.jar!/" />
@@ -25,7 +25,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$USER_HOME$/Downloads/zip4j-1.2.7.jar!/" />
@@ -34,10 +34,10 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="commons-io-2.6" level="project" />
-    <orderEntry type="library" name="commons-codec-1" level="project" />
-    <orderEntry type="library" name="commons-collections4-4.4" level="project" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="library" exported="" name="commons-io-2.6" level="project" />
+    <orderEntry type="library" exported="" name="commons-codec-1" level="project" />
+    <orderEntry type="library" exported="" name="commons-collections4-4.4" level="project" />
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$USER_HOME$/Downloads/commons-collections4-4.4/commons-collections4-4.4.jar!/" />

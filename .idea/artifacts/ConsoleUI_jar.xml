@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ConsoleUI:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ConsoleUI_jar</output-path>
+    <root id="archive" name="ConsoleUI.jar">
+      <element id="module-output" name="ConsoleUI" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/commons-io-2.6.jar" path-in-jar="/" />
+      <element id="library" level="project" name="commons-codec-1" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/commons-collections4-4.4.jar" path-in-jar="/" />
+      <element id="module-output" name="Engine" />
+    </root>
+  </artifact>
+</component>
