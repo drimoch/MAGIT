@@ -2,9 +2,10 @@ import org.apache.commons.io.FileUtils;
 
 import javax.sound.midi.Soundbank;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -34,15 +35,17 @@ public class UImain {
                         "[9]  DELETE BRANCH\n" +
                         "[10] CHECKOUT\n" +
                         "[11] DISPLAY ACTIVE BRANCH\n" +
-                        "[12] EXIT\n");
+                        "[12] REBASE BRANCH\n" +
+                        "[13] CHANGE DIRECTORY PATH\n" +
+                        "[14] EXIT\n");
         System.out.println(menu);
         int userInput = tryParseint(scanner.next());
 
-        while (userInput != 12) {
+        while (userInput != 14) {
 
-            if (userInput < 0 || userInput > 12)
+            if (userInput < 0 || userInput > 14)
                 System.out.println("Invalid input, please enter a number between 0 and 12");
-            else if ((userInput > 3 && userInput < 13 && validateCommand()) || userInput <= 3) {
+            else if ((userInput > 3 && userInput < 14 && validateCommand()) || userInput <= 3) {
                 switch (userInput) {
 
                     case 1:
@@ -82,7 +85,7 @@ public class UImain {
                         resetHeadBranch();//bonus
                         break;
                     case 13:
-                        moveDir();//bonus
+                        changeDirPath();//bonus
                         break;
                 }
             }
@@ -123,7 +126,7 @@ public class UImain {
         Scanner scanner= new Scanner(System.in);
         System.out.println("Plese enter a branch name you'd like to delete");
         String branch= scanner.nextLine();
-        File branchFile= FileUtils.getFile(m_currentRepository+"\\branches\\"+branch);
+        File branchFile= FileUtils.getFile(m_currentRepository+"\\.magit\\branches\\"+branch);
         String master=EngineUtils.readFileToString(m_currentRepository+"\\.magit\\branches\\HEAD");
         if (!branchFile.exists())
             System.out.println("No such branch exists");
@@ -265,12 +268,14 @@ public class UImain {
 
     }
     public void resetHeadBranch() throws IOException {
-        String branch= getBranchName();
-        if(!branch.equals(null)) {
+        Scanner scanner= new Scanner(System.in);
+        System.out.println("Enter Sha1");
+        String Sha1= scanner.nextLine();
+        if(EngineUtils.isACommit(Sha1,m_currentRepository)) {
             saveOpenChanges();
             String head=EngineUtils.readFileToString(m_currentRepository+"\\.magit\\branches\\HEAD");
-            String newSha1= EngineUtils.readFileToString(m_currentRepository+"\\.magit\\branches\\"+branch);
-            EngineUtils.overWriteFileContent(m_currentRepository+"\\.magit\\branches\\"+head,newSha1);
+//            String newSha1= EngineUtils.readFileToString(m_currentRepository+"\\.magit\\branches\\"+branch);
+            EngineUtils.overWriteFileContent(m_currentRepository+"\\.magit\\branches\\"+head,Sha1);
             displayHeadDetails();
         }
     }
@@ -330,11 +335,52 @@ public class UImain {
              res.forEach(i-> System.out.println(String.format(i," Root directory SHA1:", " Parent branch SHA1:", " Created by:", "Date submitted:", "Commit message:")));
 
     }
-    public void moveDir(){
+    public void changeDirPath(){
         String sourcePath, destPath;
         Scanner scanner= new Scanner(System.in);
-        System.out.println(String.format("Where is the file/directory you wish to move located? Please provide a relative path to the current repository %s",m_currentRepository));
+        System.out.println(String.format("Please enter the file/directory source path (relative to %s)",m_currentRepository));
         sourcePath= scanner.nextLine();
+        while(!FileUtils.getFile(m_currentRepository+"\\"+sourcePath).exists() && sourcePath.contains(".magit")&& !sourcePath.equals(27)){
+            System.out.println("Invalid input. Please specify a valid input or press ESC to cancel ");
+            sourcePath=scanner.nextLine();
+        }
+        if(sourcePath.equals(27))
+            return;
+        System.out.println(String.format("Please enter the file/directory destination path (relative to %s)" +
+                "to rename a file/ directory " +
+                "source path: example_folder/current_name " +
+                "destination path: example_folder/new_name",m_currentRepository));
+        destPath= scanner.nextLine();
+
+        try
+        {
+            if(sourcePath.trim().length()>0 && destPath!=null && destPath.trim().length()>0 && !destPath.contains(".magit"))
+            {
+                if (FileUtils.getFile(m_currentRepository+ "\\" + sourcePath).isFile()) {
+                    FileUtils.moveFile(
+                            FileUtils.getFile(m_currentRepository + "\\" + sourcePath+ ".txt"),
+                            FileUtils.getFile(m_currentRepository + "\\" + destPath+".txt"));
+                }
+                else {
+                    FileUtils.moveDirectory(
+                            FileUtils.getFile(m_currentRepository + "\\" + sourcePath),
+                            FileUtils.getFile(m_currentRepository + "\\" + destPath));
+                }
+                System.out.println("Succesfully transfered " + sourcePath + " to " + destPath);
+            }
+            else {
+                System.out.println("Invalid destination path");
+            }
+        }catch(FileNotFoundException ex)
+        {
+            System.out.println("given destination path does not exist");
+        }catch(FileAlreadyExistsException e){
+            System.out.println("A file/folder by this name already exists");
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
     }
 
 

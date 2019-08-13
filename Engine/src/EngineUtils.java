@@ -156,6 +156,14 @@ public class EngineUtils{
 
         return content;
     }
+    public static boolean isACommit(String sha1, String rootPath){
+        try {
+           return(getZippedFileLines(rootPath+ "\\.magit\\objects\\"+ sha1 +".zip").get(5).equalsIgnoreCase("commit"));
+        } catch (IOException e) {
+            return false;
+        }
+
+    }
 }
 
 
