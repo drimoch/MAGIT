@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4fe2640f-beef-4929-ba20-03a8c2752714" name="Default Changelist" comment="Fixed issues with commit.">
-      <change afterPath="$PROJECT_DIR$/Engine/src/Exceptions/FolderIsNotEmptyException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engine/src/Exceptions/RepoXmlNotValidException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engine/src/Exceptions/RepositoryAlreadyExistException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engine/src/JAXBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleUI/src/UImain.java" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleUI/src/UImain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/src/CommitObj.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/CommitObj.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/src/EngineUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/EngineUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/src/FolderItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/FolderItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/src/MainEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/src/MainEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ConsoleUI/UImain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ConsoleUI/UImain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Engine/EngineUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Engine/EngineUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Engine/FolderItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Engine/FolderItem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Engine/MainEngine$FolderItemEquator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Engine/MainEngine$FolderItemEquator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Engine/MainEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Engine/MainEngine.class" afterDir="false" />
-    </list>
+    <list default="true" id="4fe2640f-beef-4929-ba20-03a8c2752714" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -86,8 +70,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="210" column="11" selection-start-line="210" selection-start-column="11" selection-end-line="210" selection-end-column="11" />
+            <state relative-caret-position="252">
+              <caret line="216" column="33" selection-start-line="216" selection-start-column="17" selection-end-line="216" selection-end-column="33" />
               <folding>
                 <element signature="method#scanWorkingCopy#0;class#MainEngine#0" />
                 <element signature="e#1262#1295#0" />
@@ -335,7 +319,7 @@
       <workItem from="1565166986293" duration="767000" />
       <workItem from="1565184241249" duration="1486000" />
       <workItem from="1565549776346" duration="35724000" />
-      <workItem from="1565682053255" duration="7974000" />
+      <workItem from="1565682053255" duration="9334000" />
     </task>
     <task id="LOCAL-00001" summary="nothing">
       <created>1564404136766</created>
@@ -435,11 +419,18 @@
       <option name="project" value="LOCAL" />
       <updated>1564830699155</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="major commit">
+      <created>1565692332063</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1565692332063</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="182099000" />
+    <option name="totallyTimeSpent" value="183459000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -474,7 +465,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49932885" weight="0.329429" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Messages" order="12" visible="true" weight="0.32719547" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.32719547" />
       <window_info anchor="bottom" id="Inspection Results" order="13" weight="0.3286119" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -534,7 +525,8 @@
     <MESSAGE value="Merge branch 'master' of https://github.com/drimoch/MAGIT&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;ConsoleUI/src/UImain.java&#10;#&#9;Engine/Engine.iml&#10;#&#9;Engine/src/MainEngine.java" />
     <MESSAGE value="Merge branch 'master' of https://github.com/drimoch/MAGIT&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;ConsoleUI/src/UImain.java&#10;#&#9;Engine/src/MainEngine.java" />
     <MESSAGE value="Fixed issues with commit." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed issues with commit." />
+    <MESSAGE value="major commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="major commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1072,8 +1064,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/MainEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="210" column="11" selection-start-line="210" selection-start-column="11" selection-end-line="210" selection-end-column="11" />
+        <state relative-caret-position="252">
+          <caret line="216" column="33" selection-start-line="216" selection-start-column="17" selection-end-line="216" selection-end-column="33" />
           <folding>
             <element signature="method#scanWorkingCopy#0;class#MainEngine#0" />
             <element signature="e#1262#1295#0" />
